@@ -1,0 +1,79 @@
+$("#add").live('click',function(){
+     $("#insert_tr").show();
+	$(this).hide();
+});
+
+
+
+$("#remove").live('click',function(){
+ $("#insert_tr").hide();
+ $("#add").show(); 
+ });
+
+	
+$("#insert").live('click',function(){
+	var fname=$("#fname").val();
+	var lname=$("#lname").val();
+	var email=$("#email").val();
+    
+	 var id;
+	 var dataString ='fname='+fname+'&lname='+lname+'&email='+email;
+
+	$.ajax({
+		type: "POST",
+		url: "insert.php",
+		data: dataString,
+		cache: false,
+		success: function(e)
+		{
+		   var id=e;
+		   //  alert(id);
+		   //update btn id
+		   
+	
+		   
+		   var tdata="<tr id="+id+">"+
+           
+		   "<td class='edit_td' >"+
+			   "<span class='text' id='one_"+id+"' >"+fname+"</span>"+
+               	"<input type='text' class='editbox_search' value="+fname+" />"+	   
+			"</td>"+ 
+			
+			"<td class='edit_td' >"+
+			    "<span class='text' id='two_"+id+"' >"+lname+"</span>"+
+				"<input type='text' class='editbox_search' value="+lname+" />"+
+			"</td> "+
+			
+			"<td class='edit_td' >"+
+			    "<span class='text' id='three_"+id+"' >"+email+"</span>"+
+				"<input type='text' class='editbox_search' value="+email+" />"+
+			"</td>   "+
+			
+			"<td class='edit_td' >"+
+			    "<a href='#'  class='edit_btn'>Edit</a> "+
+				"<a href='#' class='update' id="+upd+" style='display:none'>Update</a>&nbsp;&nbsp;&nbsp;"+
+				"<a href='#' class='delete' id="+id+"> Delete </a>"+
+			 "</td>"+
+			
+			"</tr>"
+
+
+
+				 
+ $("#mytable").append(tdata);
+		   
+		   
+		}
+	}); // ajax end
+ 
+ 
+ 
+ 
+ 
+ // on insert , get generated ID and assign to tr 
+ 
+
+ 
+
+
+});	
