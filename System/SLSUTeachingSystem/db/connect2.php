@@ -1,6 +1,6 @@
 <?php
 
-$conn = new mysqli('127.0.0.1', 'root', '', 'teachers_programdb');
+$conn = new mysqli('127.0.0.1', 'root', '', 'capas_tpdb');
 
 
 if($conn->connect_errno){

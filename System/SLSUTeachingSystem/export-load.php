@@ -130,6 +130,31 @@
 	?>
 
 	<?php
+	
+		require ("db/connect2.php");
+		$prof=$_SESSION['sess_name'];  //In order to get the value of the selected professor in rating.php
+		$sql2="SELECT * FROM teaching_load WHERE name='$prof'";
+		$query2=mysqli_query($conn, $sql2); 
+
+
+          while(mysqli_fetch_array($query2,MYSQLI_NUM));
+        {
+
+            $subject = $row[2];
+            $time = $row[3];
+            $day = $row[4];
+            $room = $row[5];
+            $course = $row[6];
+            $hrs_week = $row[7];
+            $units = $row[8];
+            $class_size = $row[9];
+
+        }
+
+
+        ?>
+
+	<?php
 
 					
 				
@@ -270,117 +295,9 @@
 
 	$pdf->Cell(10);	
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
+	$pdf->Cell(20,5,"$subject",1,0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(30,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(30,5,'',1,1);
-
-	$pdf->Cell(10);	
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(30,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(30,5,'',1,1);
-
-	$pdf->Cell(10);	
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(30,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(30,5,'',1,1);
-
-	$pdf->Cell(10);	
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(30,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(30,5,'',1,1);
-
-	$pdf->Cell(10);	
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(30,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(30,5,'',1,1);
-
-	$pdf->Cell(10);	
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(30,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(30,5,'',1,1);
-
-	$pdf->Cell(10);	
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
+	$pdf->Cell(20,5,"$time",1,0);
 	$pdf->SetFont('Arial','',9);
 	$pdf->Cell(20,5,'',1,0);
 	$pdf->SetFont('Arial','',9);
@@ -394,6 +311,12 @@
 	$pdf->SetFont('Arial','',9);
 	$pdf->Cell(30,5,'',1,1);
 	$pdf->Ln(5);
+
+
+
+      
+
+
 
 
 	$pdf->Cell(10);	
@@ -418,44 +341,49 @@
 	$pdf->SetFont('Arial','',9);
 	$pdf->Cell(55,5,'Designation',1,0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(55,5,"   $designation",1,0);
+	$pdf->Cell(55,5,"$designation",1,0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(70,5,"   $designation_hours",1,1);
+	$pdf->Cell(70,5,"$designation_hours",1,1);
 	$pdf->Cell(10);	
 	$pdf->SetFont('Arial','',9);
 	$pdf->Cell(55,5,'Committee Work',1,0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(55,5,"   $committee",1,0);
+	$pdf->Cell(55,5,"$committee",1,0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(70,5,"   $committee_hours",1,1);
+	$pdf->Cell(70,5,"$committee_hours",1,1);
 	$pdf->Cell(10);	
 	$pdf->SetFont('Arial','',9);
 	$pdf->Cell(55,5,'Research Work',1,0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(55,5,"   $research",1,0);
+	$pdf->Cell(55,5,"$research",1,0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(70,5,"   $research_hours",1,1);
+	$pdf->Cell(70,5,"$research_hours",1,1);
 	$pdf->Cell(10);	
 	$pdf->SetFont('Arial','',9);
 	$pdf->Cell(55,5,'Extension',1,0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(55,5,"   $extension",1,0);
+	$pdf->Cell(55,5,"$extension",1,0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(70,5,"   $extension_hours",1,1);
+	$pdf->Cell(70,5,"$extension_hours",1,1);
 	$pdf->Cell(10);	
 	$pdf->SetFont('Arial','',9);
 	$pdf->Cell(55,5,'Consultation Time',1,0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(55,5,"   $consultation",1,0);
+	$pdf->Cell(55,5,"$consultation",1,0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(70,5,"   $consultation_hours",1,1);
+	$pdf->Cell(70,5,"$consultation_hours",1,1);
 	$pdf->Ln(5);
 
 	$pdf->Cell(10);	
 	$pdf->SetFont('Arial','',12);
 	$pdf->Cell(120,5,'Date Accomplished:',0,0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(10,5,'_____________________________',0,1);
+	$pdf->Cell(50,5,"$prof",0,1,'C');
+
+	$pdf->Cell(132);	
+	$pdf->SetFont('Arial','',5);
+	$pdf->Cell(0,5,'______________________________________________',0,1);
+
 
 	$pdf->Cell(132);	
 	$pdf->SetFont('Arial','',10);
@@ -477,7 +405,7 @@
 	$pdf->Cell(132);	
 	$pdf->SetFont('Arial','',12);
 	$pdf->Cell(0,5,'Approved:',0,1);
-	$pdf->Ln(5);
+	$pdf->Ln(2);
 
 	$pdf->Cell(132);	
 	$pdf->SetFont('Arial','',12);
@@ -486,7 +414,7 @@
 	$pdf->Cell(132);	
 	$pdf->SetFont('Arial','',9);
 	$pdf->Cell(0,5,'Vice President , Academic Affairs',0,1);
-	$pdf->Ln(20);
+	$pdf->Ln(15);
 
 
 	$pdf->Cell(10);	

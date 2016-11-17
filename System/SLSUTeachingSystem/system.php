@@ -9,13 +9,11 @@
 ?>
 
 
-
-
 <?php    
 
 
           define('DB_HOST', 'localhost'); 
-          define('DB_NAME', 'teachers_programdb');
+          define('DB_NAME', 'capas_tpdb');
           define('DB_USER','root');
           define('DB_PASSWORD',''); 
 
@@ -56,12 +54,6 @@ If(isset($_REQUEST['submit'])!=''){
                     $res4=mysql_query($sql4);
                     $res5=mysql_query($sql5);
 
-
-                       
-                    
-                   
-
-    
 
                     If($res)
                         {
@@ -106,17 +98,7 @@ If(isset($_REQUEST['submit'])!=''){
                       Else
                       {
                         $alert= "Error in Adding Assignment Information";
-                      }
-
-
-
-
-                       
-
-
-
-
-                     
+                      }                   
 
 }
 
@@ -126,7 +108,7 @@ If(isset($_REQUEST['submit'])!=''){
 <?php 
 
  define('DB_HOST', 'localhost'); 
-          define('DB_NAME', 'teachers_programdb');
+          define('DB_NAME', 'capas_tpdb');
           define('DB_USER','root');
           define('DB_PASSWORD',''); 
 
@@ -166,6 +148,59 @@ if(isset($_POST)==true && empty($_POST)==false){
                                           Else
                                           {
                                             $alert= "Error in Adding Basic Information";
+                                          }
+                                    
+
+                                       
+                                   
+                                    
+                                
+                    
+                     } 
+
+
+                   }
+
+?>
+
+<?php 
+
+ define('DB_HOST', 'localhost'); 
+          define('DB_NAME', 'capas_tpdb');
+          define('DB_USER','root');
+          define('DB_PASSWORD',''); 
+
+          $con=mysql_connect(DB_HOST,DB_USER,DB_PASSWORD) or die("Failed to connect to MySQL: " . mysql_error()); 
+          $db=mysql_select_db(DB_NAME,$con) or die("Failed to connect to MySQL: " . mysql_error());
+
+
+if(isset($_POST)==true && empty($_POST)==false){
+                            
+                            $deg=$_POST['deg'];
+                            $year=$_POST['year'];
+                            $school=$_POST['school'];
+                          
+                          
+                                    foreach($deg as $a => $b){
+
+
+                                     $sql="insert into educ_background(name,educ_deg,educ_year,educ_school) 
+                                         values
+                                        ('".$_REQUEST['name']."','$deg[$a]','$year[$a]','$school[$a]')";    
+
+                                        $res=mysql_query($sql);
+                                       
+                                       
+
+                        
+
+                                        If($res)
+                                            {
+                                        $note= "Adding Educational Background was Successful";
+                                            }
+                                          Else
+                                          {
+                                            $alert= "Error in Adding Educational Background Information";
                                           }
                                     
 
@@ -378,7 +413,7 @@ body {
                                                                   <tr>
                                                                       <th>Name:</th>
                                                                       <td>
-                                                                          <input type="text" name="name" placeholder="Name" 
+                                                                          <input type="text" name="name" value="<?php echo $name;?>" 
                                                                           class="form-control" required="required" title="Name" 
                                                                       data-placement="top" data-toggle="popover" data-trigger="focus" data-content="(First Name Middle Initial Last Name)"
                                                                       required="required"/>
@@ -450,13 +485,13 @@ body {
                                                                     <th>College:</th>
                                                                     <td>
                                                                         <select class="form-control" name="college">
-                                                                            <option>Agriculture</option>
-                                                                            <option>Allied Medicine</option>
-                                                                            <option>Arts and Sciences</option>
-                                                                            <option>Business Administration</option>
-                                                                            <option>Engineering</option>
-                                                                            <option>Industrial Technology</option>
-                                                                            <option>Teachers Educations</option>
+                                                                            <option>College of Agriculture</option>
+                                                                            <option>College of Allied Medicine</option>
+                                                                            <option>College of Arts and Sciences</option>
+                                                                            <option>College of Business Administration</option>
+                                                                            <option>College of Engineering</option>
+                                                                            <option>College of Industrial Technology</option>
+                                                                            <option>College of Teachers Educations</option>
                                                                         </select>
                                                                     </td>
                                                                     <th>School Year:</th>
@@ -479,7 +514,7 @@ body {
                                                                     required="required"
                                                                     </td>
                                                                     <th>Semester:</th>
-                                                                    <th><select name="semester" required="required">
+                                                                    <th><select name="semester" required="required" class="form-control">
                                                                         <option >1st Semester</option>
                                                                         <option >2nd Semester</option>
                                                                         
@@ -490,12 +525,55 @@ body {
                                                             
                                                         </table>
                                                     </div>
+                                                </div>
+
+                                            </div>
+                                             <!-- End -->
+                                    </div>
+
+                                            <!--EDUCATIONAL BACKGROUND-->
+
+                                            <div class="col-md-12">
+                                              <div class="panel panel-warning">
+                                                <div class="panel-heading">
+                                                    Educational Background
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="table-responsive">
+                                                        <div class="panel-body">
+                                                <div class="table-responsive">
+
+                                                    
+                                                    <table class="table table-striped table-bordered table-hover" id="dataTable">
+                                                      
+                                                        <thead>
+                                                            <tr>
+                                                                <td><input type="checkbox" name="chk"></td>
+
+                                                                <td><input type="text" placeholder="Degree/Earned(BS/MA/PH.D)" name="deg[]" class="form-control"/></td>
+                                                                <TD><INPUT type="text" placeholder="Year Graduated/Units Earned" name="year[]" class="form-control"/></TD>
+                                                                <TD><INPUT type="text" placeholder="School" name="school[]" class="form-control"/></TD>
+                                                                
+                                                                
+                                                                
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
+
+                                                    <INPUT type="button" value="Add Row" onclick="addRow('dataTable')" />
+                                                    <INPUT type="button" value="Delete Row" onclick="deleteRow('dataTable')" />
+                                                </div>
+                                              </div>
+                                                    </div>
                                                     <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Next</button>
                                                 </div>
 
                                             </div>
                                              <!-- End -->
                                     </div>
+
+
+                                            <!--END OF BACKGROUND-->.
                               </div>
                             </div>
 
@@ -578,7 +656,7 @@ body {
                                                 <div class="table-responsive">
 
                                                     
-                                                    <table class="table table-striped table-bordered table-hover" id="dataTable">
+                                                    <table class="table table-striped table-bordered table-hover" id="dataTable2">
                                                       
                                                         <thead>
                                                             <tr>
@@ -598,8 +676,8 @@ body {
                                                         </thead>
                                                     </table>
 
-                                                    <INPUT type="button" value="Add Row" onclick="addRow('dataTable')" />
-                                                    <INPUT type="button" value="Delete Row" onclick="deleteRow('dataTable')" />
+                                                    <INPUT type="button" value="Add Row" onclick="addRow('dataTable2')" />
+                                                    <INPUT type="button" value="Delete Row" onclick="deleteRow('dataTable2')" />
                                                 </div>
                                                  <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Next</button>
                                                
@@ -861,6 +939,45 @@ body {
           }
 
           function deleteRow(tableID) {
+            var table = document.getElementById(tableID);
+            var rowCount = table.rows.length;
+            for(var i=0; i<rowCount; i++) {
+              var row = table.rows[i];
+              var chkbox = row.cells[0].childNodes[0];
+              if(null != chkbox && true == chkbox.checked) {
+                if(rowCount <= 1) {             // limit the user from removing all the fields
+                  alert("CANNOT REMOVE ALL");
+                  break;
+                }
+                table.deleteRow(i);
+                rowCount--;
+                i--;
+              }
+            }
+          }
+
+
+    </script>
+
+    <script>
+
+          function addRow2(tableID) {
+            var table = document.getElementById(tableID);
+            var rowCount = table.rows.length;
+            if(rowCount < 20){             // limit the user from creating fields more than your limits
+              var row = table.insertRow(rowCount);
+              var colCount = table.rows[0].cells.length;
+              for(var i=0; i<colCount; i++) {
+                var newcell = row.insertCell(i);
+                newcell.innerHTML = table.rows[0].cells[i].innerHTML;
+              }
+            }else{
+               alert("MAXIMUM ENTRIES ARE 20");
+                   
+            }
+          }
+
+          function deleteRow2(tableID) {
             var table = document.getElementById(tableID);
             var rowCount = table.rows.length;
             for(var i=0; i<rowCount; i++) {
