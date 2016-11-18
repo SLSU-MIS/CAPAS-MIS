@@ -1,8 +1,11 @@
+
+
+
 <?php
-	
+	session_start();
 	require ("db/connect2.php");
 
-	session_start();
+
 	$prof=$_SESSION['sess_name'];  //In order to get the value of the selected professor in rating.php
 
 		$sql="SELECT * FROM basic_information WHERE name='$prof'";
@@ -15,6 +18,7 @@
 						$address=$row[2];
 						$appointment=$row[3];
 						$yearservice=$row[4];
+						$date_created=$row[5];
 
 			}
 
@@ -130,31 +134,25 @@
 	?>
 
 	<?php
-	
-		require ("db/connect2.php");
-		$prof=$_SESSION['sess_name'];  //In order to get the value of the selected professor in rating.php
-		$sql2="SELECT * FROM teaching_load WHERE name='$prof'";
-		$query2=mysqli_query($conn, $sql2); 
+
+mysql_connect("localhost","root");
+mysql_select_db("capas_tpdb");
+$res=mysql_query("SELECT * FROM teaching_load");
+while($row=mysql_fetch_array($res))
+{
 
 
-          while(mysqli_fetch_array($query2,MYSQLI_NUM));
-        {
+   
 
-            $subject = $row[2];
-            $time = $row[3];
-            $day = $row[4];
-            $room = $row[5];
-            $course = $row[6];
-            $hrs_week = $row[7];
-            $units = $row[8];
-            $class_size = $row[9];
+   $subject= $row['subject'];
+   $time= $row['time'];
 
-        }
+}
 
+   
+?>
 
-        ?>
-
-	<?php
+<?php
 
 					
 				
@@ -235,35 +233,39 @@
 	$pdf->Cell(120,5,'EDUCATIONAL BACKGROUND:',0,1);
 	$pdf->Ln(5);
 
+	
+
 	$pdf->Cell(10);	
 	$pdf->SetFont('Arial','',9);
 	$pdf->Cell(70,5,'Degree/Earned(BS/MA/Ph.D):',1,0);
 	$pdf->SetFont('Arial','',9);
 	$pdf->Cell(70,5,'Year Graduated/Units Earned:',1,0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(40,5,'SCHOOL:',1,1);
-	$pdf->Cell(10);	
+	$pdf->Cell(40,5,'SCHOOL:',1,1);	
+
+
+	$prof=$_SESSION['sess_name'];
+
+	mysql_connect("localhost","root");
+	mysql_select_db("capas_tpdb");
+	$res=mysql_query("SELECT * FROM educ_background WHERE name='$prof'");
+	while($row=mysql_fetch_array($res))
+	{
+
+	$educ_deg= $row['educ_deg'];
+    $educ_year= $row['educ_year'];
+   	$educ_school= $row['educ_school'];
+
+   	$pdf->Cell(10);	
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(70,5,'',1,0);
+	$pdf->Cell(70,5,"$educ_deg",1,0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(70,5,'',1,0);
+	$pdf->Cell(70,5,"$educ_year",1,0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(40,5,'',1,1);
-	$pdf->Cell(10);	
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(70,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(70,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(40,5,'',1,1);
-	$pdf->Cell(10);	
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(70,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(70,5,'',1,0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(40,5,'',1,1);
-	$pdf->Ln(5);
+	$pdf->Cell(40,5,"$educ_school",1,1);
+	
+
+}
 
 	$pdf->Cell(10);	
 	$pdf->SetFont('Arial','',9);
@@ -293,6 +295,22 @@
 	$pdf->SetFont('Arial','',9);
 	$pdf->Cell(30,5,'Class Size',1,1);
 
+
+
+$prof=$_SESSION['sess_name'];
+mysql_connect("localhost","root");
+mysql_select_db("capas_tpdb");
+$res=mysql_query("SELECT * FROM teaching_load WHERE name='$prof'");
+while($row=mysql_fetch_array($res))
+{
+
+
+   
+
+   $subject= $row['subject'];
+   $time= $row['time'];
+
+
 	$pdf->Cell(10);	
 	$pdf->SetFont('Arial','',9);
 	$pdf->Cell(20,5,"$subject",1,0);
@@ -310,11 +328,10 @@
 	$pdf->Cell(20,5,'',1,0);
 	$pdf->SetFont('Arial','',9);
 	$pdf->Cell(30,5,'',1,1);
-	$pdf->Ln(5);
 
+    }
 
-
-      
+  
 
 
 
@@ -376,7 +393,7 @@
 
 	$pdf->Cell(10);	
 	$pdf->SetFont('Arial','',12);
-	$pdf->Cell(120,5,'Date Accomplished:',0,0);
+	$pdf->Cell(120,5,"Date Accomplished:$date_created",0,0);
 	$pdf->SetFont('Arial','',9);
 	$pdf->Cell(50,5,"$prof",0,1,'C');
 
