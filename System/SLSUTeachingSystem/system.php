@@ -3,6 +3,7 @@
     error_reporting(0);
     session_start();
     $name = $_SESSION['sess_name'];
+    $college = $_SESSION['sess_college'];
     if(!isset($_SESSION['sess_sess_username'])){
       header('Location: index.php?err=2');
     }
@@ -484,15 +485,10 @@ body {
                                                                 <tr>
                                                                     <th>College:</th>
                                                                     <td>
-                                                                        <select class="form-control" name="college">
-                                                                            <option>College of Agriculture</option>
-                                                                            <option>College of Allied Medicine</option>
-                                                                            <option>College of Arts and Sciences</option>
-                                                                            <option>College of Business Administration</option>
-                                                                            <option>College of Engineering</option>
-                                                                            <option>College of Industrial Technology</option>
-                                                                            <option>College of Teachers Educations</option>
-                                                                        </select>
+                                                                       
+                                                                        <input type="text" class="form-control" name="college" value="<?php echo $college; ?>" title="College" 
+                                                                    data-placement="top" data-toggle="popover" data-trigger="focus" data-content="Auto Filled(Dont Edit)"
+                                                                    required="required"/>
                                                                     </td>
                                                                     <th>School Year:</th>
                                                                     <th>

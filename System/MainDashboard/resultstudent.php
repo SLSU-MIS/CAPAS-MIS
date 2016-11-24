@@ -1,8 +1,10 @@
-<?php
-include('session.php');
-require 'db/connect.php';
-error_reporting(0);
-
+<?php 
+    
+    error_reporting(0);
+    session_start();
+    if(!isset($_SESSION['sess_sess_admin'])){
+      header('Location: index.php?err=2');
+    }
 ?>
 <?php
   

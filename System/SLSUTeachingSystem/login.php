@@ -36,8 +36,10 @@
     
     $_SESSION['sess_sess_username'] = $row['ins_id'];
     $_SESSION['sess_name'] = $row['ins_name'];
+    $_SESSION['sess_college'] = $row['ins_college'];
 
     echo $_SESSION['sess_name'];
+    echo $_SESSION['sess_college'];
 
     session_write_close();
 

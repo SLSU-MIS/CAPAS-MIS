@@ -155,7 +155,7 @@ if(@$_POST['login']){
                                    
 			                    </form>
                                 <div class="row">
-                                    <a href="/CAPAS-MIS/System/index.php"><--Back</a>
+                                    <a href="/CAPAS-MIS/System/index2.html"><--Back</a>
                                    
                                 </div>
 		                    </div>

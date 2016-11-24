@@ -176,7 +176,40 @@ while($row=mysql_fetch_array($res))
 
 
 	$pdf->Image('img/slsu.png',20,20,30,30); // 1#: x axis 2#: y axis 3#: width 4#: height of image
+		
+	if($college=="College of Arts and Sciences"){
+	$pdf->Image('img/cas.png',165,20,30,30);
+	}
+
+	if($college=="College of Agriculture"){
+	$pdf->Image('img/cag.png',165,20,30,30);
+	}
+
+	if($college=="College of Allied Medicine"){
+	$pdf->Image('img/cam.png',165,20,30,30);
+	}
+
+	if($college=="College of Engineering"){
 	$pdf->Image('img/cen.png',165,20,30,30);
+	}
+
+	if($college=="College of Industrial Technology"){
+	$pdf->Image('img/cit.png',165,20,30,30);
+	}
+
+	if($college=="College of Business Administration"){
+	$pdf->Image('img/cba.png',165,20,30,30);
+	}
+
+	if($college=="College of Teacher Education"){
+	$pdf->Image('img/cte.png',165,20,30,30);
+	}
+
+
+
+	
+
+
 	$pdf->Cell(0,15,'',0,1); 	
 	
 	//FOR A CELL 
@@ -186,7 +219,7 @@ while($row=mysql_fetch_array($res))
 	$pdf->SetFont('Times','B',12);	
 	$pdf->Cell(0,5,'SOUTHERN LUZON STATE UNIVERSITY',0,1,'C');
 	$pdf->SetFont('Times','',12);
-	$pdf->Cell(0,5,'College of Engineering',0,1,'C');
+	$pdf->Cell(0,5,"$college",0,1,'C');
 	$pdf->SetFont('Times','',12);
 	$pdf->Cell(0,5,'Lucban, Quezon',0,1,'C');
 	$pdf->Ln(10);
@@ -309,6 +342,13 @@ while($row=mysql_fetch_array($res))
 
    $subject= $row['subject'];
    $time= $row['time'];
+   $day= $row['day'];
+   $room= $row['room'];
+   $course= $row['course'];
+   $hrs_week= $row['hrs_week'];
+   $units= $row['units'];
+   $class_size= $row['class_size'];
+
 
 
 	$pdf->Cell(10);	
@@ -317,17 +357,17 @@ while($row=mysql_fetch_array($res))
 	$pdf->SetFont('Arial','',9);
 	$pdf->Cell(20,5,"$time",1,0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
+	$pdf->Cell(20,5,"$day",1,0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
+	$pdf->Cell(20,5,"$room",1,0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
+	$pdf->Cell(20,5,"$course",1,0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(30,5,'',1,0);
+	$pdf->Cell(30,5,"$hrs_week",1,0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(20,5,'',1,0);
+	$pdf->Cell(20,5,"$units",1,0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(30,5,'',1,1);
+	$pdf->Cell(30,5,"$class_size",1,1);
 
     }
 
