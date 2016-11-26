@@ -18,9 +18,7 @@
                           {
                           die("Error: Data not found..");
                           }
-                              $Fname = $row['student_first'];
-                              $Lname = $row['student_last'];
-                              $Minitial = $row['student_middle'];
+                              $Fname = $row['student_name'];
                               $Sid = $row['student_id'];
                               $College = $row['slct1'];
                               $Department = $row['slct2'];
@@ -30,9 +28,7 @@
 
                       if(isset($_POST['update']))
                       { 
-                        $fname_update = $_POST['student_first'];
-                        $lname_update = $_POST['student_last'];
-                        $minitial_update = $_POST['student_middle'];
+                        $fname_update = $_POST['student_name'];
                         //$sid_update = $_POST['student_id'];
                         $college_update = $_POST['slct1'];
                         $department_update = $_POST['slct2'];
@@ -41,8 +37,7 @@
                         $password_update = $_POST['student_pass'];
                         
 
-                        mysql_query("UPDATE student_evaluator SET student_last ='$lname_update',
-                        student_first ='$fname_update',student_middle ='$minitial_update',
+                        mysql_query("UPDATE student_evaluator SET student_name ='$fname_update',
                         student_college ='$college_update',student_dept ='$department_update',
                         student_year ='$year_update',student_section ='$section_update',
                         student_pass ='$password_update' WHERE student_id = '$id'")
@@ -287,14 +282,8 @@
                             <div class="form-group">
                               <label class="col-sm-2 control-label">Student Name</label>
 
-                              <div class="col-sm-2">
-                                <input name="student_last"type="text" class="form-control" value="<?php echo $Lname ?>"/>
-                              </div>
-                              <div class="col-sm-2">
-                                <input name="student_first" type="text" class="form-control" value="<?php echo $Fname ?>"/>
-                              </div>
-                              <div class="col-sm-2">
-                                <input name="student_middle" type="text" class="form-control" value="<?php echo $Minitial ?>"/>
+                              <div class="col-sm-6">
+                                <input name="student_name"type="text" class="form-control" placeholder="(LastName,FirstName Middle Initial)">
                               </div>
                             </div>
 

@@ -147,21 +147,15 @@
             <span class="label label-primary pull-right">4</span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="assignstudent.php"><i class="fa fa-circle-o"></i>STUDENT</a></li>
-            <li><a href="assignself.php"><i class="fa fa-circle-o"></i>SELF</a></li>
-            <li><a href="assignpeer.php"><i class="fa fa-circle-o"></i>PEER</a></li>
-            <li><a href="assigndean.php"><i class="fa fa-circle-o"></i>DEAN</a></li>
+            <li><a href="uploadstudentcred.php"><i class="fa fa-circle-o"></i>UPLOAD STUDENTS CRED</a></li>
+            <li><a href="uploadinstructorcred.php"><i class="fa fa-circle-o"></i>UPLOAD INSTRUCTORS CRED</a></li>
+            <li><a href="assignstudent.php"><i class="fa fa-circle-o"></i>ASSIGN STUDENT</a></li>
+            <li><a href="assignself.php"><i class="fa fa-circle-o"></i>ASSIGN SELF</a></li>
+            <li><a href="assignpeer.php"><i class="fa fa-circle-o"></i>ASSIGN PEER</a></li>
+            <li><a href="assigndean.php"><i class="fa fa-circle-o"></i>ASSIGN DEAN</a></li>
           </ul>
         </li>
 
-        <li class="treeview">
-          <a href="sectioning.php">
-            <i class="fa fa-files-o"></i>
-            <span>SECTIONING</span>
-           
-          </a>
-          
-        </li>
         <li class="treeview">
           <a href="#">
             <i class="fa fa-table"></i> 

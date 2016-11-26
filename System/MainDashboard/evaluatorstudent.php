@@ -11,9 +11,7 @@
 
 <?php
 
-
-  
-
+  require 'db/connect.php';
 
   if (isset($_POST['submit'])) {
     $Fname = $_POST['student_name']; 
@@ -34,51 +32,38 @@
     echo $Year;
     echo $password;**/
 
-
-
-
-
-        //checks if stud_id already exists
-        $sql = "SELECT student_id from student_evaluator WHERE student_id='$Sid'";
-        $query = mysqli_query($conn, $sql);
-
-        if ($query) {
-            $row = mysqli_fetch_array($query, MYSQLI_NUM);
-            $studID = $row[0];
-
-                if($studID == $Sid){
-                    $note= "Student Id already exists ";
-                }else if($studID!=$Sid){
-
                     $sql = "INSERT INTO student_evaluator(student_id,student_name,student_college,student_dept,student_year,student_section,student_pass) 
                             VALUES('$Sid','$Fname','$College','$Department', '$Year','$Section','$Password')";
                          $query = mysqli_query($conn, $sql);
                          if($query){
                               $note= "SUCCESSFULLY Registered";
                              }
-                }
+
+                             else{
+                              $alert= "Error in Registration (Already Exists)";
+                             }
         
 
     
-    }// Value Resets
 
-        if (isset($_POST['reset'])){
+       
+  }
+
+
+   if (isset($_POST['reset'])){
             $sql= "UPDATE student_evaluator SET activate='0'";
             $query = mysqli_query($conn, $sql);
 
             if($query){
-                $alert= "EVALUATORS LOGIN CREDENTIALS HAS BEEN RESET";
+                $alert2= "EVALUATORS LOGIN CREDENTIALS HAS BEEN RESET";
 
             }
 
         }
 
-  }
 
 ?>
 
-
-<!--DELETING SCRIPT-->
 
 
 
@@ -205,19 +190,23 @@
           </ul>
         </li>
 
-         <li class="treeview">
+          <li class="treeview">
           <a href="#">
             <i class="fa fa-files-o"></i>
             <span>ASSIGNMENT</span>
             <span class="label label-primary pull-right">4</span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="assignstudent.php"><i class="fa fa-circle-o"></i>STUDENT</a></li>
-            <li><a href="assignself.php"><i class="fa fa-circle-o"></i>SELF</a></li>
-            <li><a href="assignpeer.php"><i class="fa fa-circle-o"></i>PEER</a></li>
-            <li><a href="assigndean.php"><i class="fa fa-circle-o"></i>DEAN</a></li>
+            <li><a href="uploadstudentcred.php"><i class="fa fa-circle-o"></i>UPLOAD STUDENTS CRED</a></li>
+            <li><a href="uploadinstructorcred.php"><i class="fa fa-circle-o"></i>UPLOAD INSTRUCTORS CRED</a></li>
+            <li><a href="assignstudent.php"><i class="fa fa-circle-o"></i>ASSIGN STUDENT</a></li>
+            <li><a href="assignself.php"><i class="fa fa-circle-o"></i>ASSIGN SELF</a></li>
+            <li><a href="assignpeer.php"><i class="fa fa-circle-o"></i>ASSIGN PEER</a></li>
+            <li><a href="assigndean.php"><i class="fa fa-circle-o"></i>ASSIGN DEAN</a></li>
           </ul>
         </li>
+
+        
         <li class="treeview">
           <a href="#">
             <i class="fa fa-table"></i> 
@@ -272,7 +261,8 @@
         <!-- ./col -->
         <div class="col-lg-6 col-xs-6">
           <?php if (isset($note)) {echo "<div class=\"alert alert-success\"><strong>Note: </strong>" .$note. "</div>"; }?>
-          <?php if (isset($alert)) {echo "<div class=\"alert alert-success\"><strong>Alert: </strong>" .$alert. "</div>"; }?>
+          <?php if (isset($alert2)) {echo "<div class=\"alert alert-success\"><strong>Note: </strong>" .$alert2. "</div>"; }?>
+          <?php if (isset($alert)) {echo "<div class=\"alert alert-danger\"><strong>Alert: </strong>" .$alert. "</div>"; }?>
 
         </div>
 
@@ -358,7 +348,12 @@
 
           </div>
           <!-- /.box -->
-
+            <div align="left">
+                <form action="evaluatorstudent.php" method="POST">
+                      <input type="submit" class="btn btn-danger" name="reset" value="Reset Credentials" />
+                </form>
+            </div>
+            <hr>
               <div class="alert alert-danger"><strong>Note:</strong> Click the (+) at the right to expand</div>
            <!--PAGE ADDING-->
       <div class="row">
@@ -470,7 +465,7 @@
                           <!-- /.box-body -->
                           <div class="box-footer">
                             <button type="submit" class="btn btn-default">Cancel</button>&nbsp;
-                             <input type="submit" class="btn btn-danger" name="reset" value="reset" />
+                             
                             <button name="submit" type="submit" class="btn btn-info pull-right">Submit</button>
                           </div>
                           <!-- /.box-footer -->

@@ -147,6 +147,7 @@
         </li>
 
 
+
         
         <li class="treeview">
           <a href="#">
@@ -172,12 +173,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        ASSIGNMENT TAB
+        ASSIGNMENT
         <small>(Student)</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Peer Assignment Tab</li>
+        <li class="active">Assignment Tab</li>
       </ol>
     </section>
 
@@ -187,16 +188,10 @@
       <div class="row">
         
         <!-- ./col -->
-        <div class="col-lg-6 col-xs-6">
+        <div class="col-xs-12">
           <!-- small box -->
-          <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class="fa fa-users"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Registered Dean Evaluators</span>
-              <span class="info-box-number">10</span>
-            </div>
-            <!-- /.info-box-content -->
+          <div class="callout callout-success" align="center">
+                <h4>Uploading of Assignments</h4>
           </div>
         </div>
         <!-- ./col -->
@@ -208,9 +203,9 @@
         <section class="col-lg-12 connectedSortable">
 
 
-        <div class="box box-primary box-solid">
+        <div class="box box-warning box-solid">
             <div class="box-header with-border">
-              <h3 class="box-title">ASSIGNING INSTRUCTORS TO BE EVALUATED BY DEAN</h3>
+              <h3 class="box-title">DATABASE QUE</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -223,47 +218,115 @@
 
                <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title">INSTRUCTORS TO BE EVALUATE</h3>
+                  <h3 class="box-title">Management of Students Enrolled in Subjects</h3>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body">
-                  <table id="example1" class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                      <th>COLLEGE</th>
-                      <th>DEPARTMENT</th>
-                      
-                      <th>ACTION</th>
-                    </tr>
-                    </thead>
-                    <thead>
-                    <tr>
-                      <th>
-                      <select id="slct1" name="slct1" onchange="populate(this.id,'slct2')">
-                        <option value=""></option>
-                        <option value="CAg">CAg</option>
-                        <option value="CAS">CAS</option>
-                        <option value="CAM">CAM</option>
-                        <option value="CBA">CBA</option>
-                        <option value="CEn">CEn</option>
-                        <option value="CIT">CIT</option>
-                        <option value="CTE">CTE</option>
-                      </select>
-                      </th>
-                            <th>
-                               <select id="slct2" name="slct2"></select>
-                            </th>
-                            
-                            <th>
-                                <a class="btn btn-success">Submit</a>
-                            </th>
-                        </tr>
-                    </thead>
+               <div class="box-body">
+             <br>
+                    <h1> CSV to Database </h1>
+                    <p> Fields are provided for you,only the CSV filename will fill-up</p>
 
-                    <tbody>
-                    </tbody>
-                  </table>
-                </div>
+                    </br>
+                    <form class="form-horizontal"action="evaluatorstudent.php" method="post">
+                        <div class="form-group">
+                            <label for="mysql" class="control-label col-xs-2">Mysql Server address (or)<br>Host name</label>
+                        <div class="col-xs-3">
+                            <input type="text" class="form-control" name="mysql" id="mysql" placeholder="" value="localhost">
+                        </div>
+                        </div>
+                      <div class="form-group">
+                            <label for="username" class="control-label col-xs-2">Username</label>
+                        <div class="col-xs-3">
+                            <input type="text" class="form-control" name="username" id="username" placeholder="" value="root">
+                        </div>
+                        </div>
+                      <div class="form-group">
+                            <label for="password" class="control-label col-xs-2">Password(Leave This Blank)</label>
+                        <div class="col-xs-3">
+                            <input type="text" class="form-control" name="password" id="password" placeholder="">
+                        </div>
+                        </div>
+                      <div class="form-group">
+                            <label for="db" class="control-label col-xs-2">Database name</label>
+                        <div class="col-xs-3">
+                            <input type="text" class="form-control" name="db" id="db" placeholder="" value="capas_db">
+                        </div>
+                        </div>
+                      
+                      <div class="form-group">
+                            <label for="table" class="control-label col-xs-2">Table name</label>
+                        <div class="col-xs-3">
+                            <input type="name" class="form-control" name="table" id="table" value="instructor_evaluator">
+                        </div>
+                        </div>
+                      <div class="form-group">
+                            <label for="csvfile" class="control-label col-xs-2">Name of the file</label>
+                        <div class="col-xs-3">
+                            <input type="name" class="form-control" name="csv" id="csv">
+                        </div>
+                        eg. MYDATA.csv
+                        </div>
+                      <div class="form-group">
+                      <label for="login" class="control-label col-xs-2"></label>
+                        <div class="col-xs-3">
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                      </div>
+                      </div>
+                    </form>
+                    </div>
+                    <?php 
+
+                          if(isset($_POST['username'])&&isset($_POST['mysql'])&&isset($_POST['db'])&&isset($_POST['username']))
+                          {
+                          $sqlname=$_POST['mysql'];
+                          $username=$_POST['username'];
+                          $table=$_POST['table'];
+                          if(isset($_POST['password']))
+                          {
+                          $password=$_POST['password'];
+                          }
+                          else
+                          {
+                          $password= '';
+                          }
+                          $db=$_POST['db'];
+                          $file=$_POST['csv'];
+                          $cons= mysqli_connect("$sqlname", "$username","$password","$db") or die(mysql_error());
+
+                          $result1=mysqli_query($cons,"select count(*) count from $table");
+                          $r1=mysqli_fetch_array($result1);
+                          $count1=(int)$r1['count'];
+                          //If the fields in CSV are not seperated by comma(,)  replace comma(,) in the below query with that  delimiting character 
+                          //If each tuple in CSV are not seperated by new line.  replace \n in the below query  the delimiting character which seperates two tuples in csv
+                          // for more information about the query http://dev.mysql.com/doc/refman/5.1/en/load-data.html
+                          mysqli_query($cons, '
+                              LOAD DATA LOCAL INFILE "'.$file.'"
+                                  INTO TABLE '.$table.'
+                                  FIELDS TERMINATED by \',\'
+                                  LINES TERMINATED BY \'\n\'
+                          ')or die(mysql_error());
+
+                          $result2=mysqli_query($cons,"select count(*) count from $table");
+                          $r2=mysqli_fetch_array($result2);
+                          $count2=(int)$r2['count'];
+
+                          $count=$count2-$count1;
+                          if($count>0)
+                          echo "Success";
+                          echo "<b> total $count records have been added to the table $table</b> ";
+                          echo "<br>";
+                          echo "<a href='evaluatorstudent.php' class='btn btn-success'>Refresh Browser</a>";
+
+
+                          }
+                          else{
+                          echo "";
+                          }
+
+                          ?>
+                  </div>
+            </div>
+            <!-- /.box-body -->
                 <!-- /.box-body -->
               </div>
               <!-- /.box -->

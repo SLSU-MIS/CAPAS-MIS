@@ -11,7 +11,7 @@
 
                       <?php
                       require("db/db.php");
-                      $id =$_REQUEST['student_id'];
+                      $id =$_REQUEST['ins_id'];
 
                       $result = mysql_query("SELECT * FROM instructor_evaluator WHERE ins_id='$id'");
                       $row = mysql_fetch_array($result);
@@ -19,9 +19,7 @@
                           {
                           die("Error: Data not found..");
                           }
-                              $Fname = $row['ins_first'];
-                              $Lname = $row['ins_last'];
-                              $Minitial = $row['ins_middle'];
+                              $Fname = $row['ins_name'];
                               $Sid = $row['ins_id'];
                               $College = $row['slct1'];
                               $Department = $row['slct2']; 
@@ -29,17 +27,14 @@
 
                       if(isset($_POST['update']))
                       { 
-                        $fname_update = $_POST['ins_first'];
-                        $lname_update = $_POST['ins_last'];
-                        $minitial_update = $_POST['ins_middle'];
+                        $fname_update = $_POST['ins_name'];
                         //$sid_update = $_POST['student_id'];
                         $college_update = $_POST['slct1'];
                         $department_update = $_POST['slct2'];
                         $password_update = $_POST['ins_pass'];
                         
 
-                        mysql_query("UPDATE instructor_evaluator SET ins_last ='$lname_update',
-                        ins_first ='$fname_update',ins_middle ='$minitial_update',
+                        mysql_query("UPDATE instructor_evaluator SET ins_name ='$fname_update',
                         ins_college ='$college_update',ins_dept ='$department_update',
                         ins_pass ='$password_update' WHERE ins_id = '$id'")
                               
@@ -281,16 +276,10 @@
                             </div>
 
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">Student Name</label>
+                              <label class="col-sm-2 control-label">Instructor Name</label>
 
-                              <div class="col-sm-2">
-                                <input name="ins_last"type="text" class="form-control" value="<?php echo $Lname ?>"/>
-                              </div>
-                              <div class="col-sm-2">
-                                <input name="ins_first" type="text" class="form-control" value="<?php echo $Fname ?>"/>
-                              </div>
-                              <div class="col-sm-2">
-                                <input name="ins_middle" type="text" class="form-control" value="<?php echo $Minitial ?>"/>
+                              <div class="col-sm-6">
+                                <input name="ins_name"type="text" class="form-control" value="<?php echo $Fname ?>"/>
                               </div>
                             </div>
 
