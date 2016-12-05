@@ -241,13 +241,14 @@
                       <th>
                       <select id="slct1" name="slct1" onchange="populate(this.id,'slct2')">
                         <option value=""></option>
-                        <option value="CAg">CAg</option>
-                        <option value="CAS">CAS</option>
-                        <option value="CAM">CAM</option>
-                        <option value="CBA">CBA</option>
-                        <option value="CEn">CEn</option>
-                        <option value="CIT">CIT</option>
-                        <option value="CTE">CTE</option>
+                            <option value="cag">College of Agriculture</option>
+                            <option value="cam">College of Allied Medicine</option>
+                            <option value="cas">College of Arts and Sciences</option>
+                            <option value="cba">College of Business Administration</option>
+                            <option value="cen">College of Engineering</option>
+                            <option value="cit">College of Industrial Technology</option>
+                            <option value="cte">College of Teachers Education</option>
+                            
                       </select>
                       </th>
                             <th>
@@ -318,46 +319,33 @@
 <script src="dist/js/app.min.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 
-<script>
-  $(function () {
-    $("#example1").DataTable();
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false
-    });
-  });
-</script>
 
 <script>
 function populate(s1,s2){
   var s1 = document.getElementById(s1);
   var s2 = document.getElementById(s2);
   s2.innerHTML = "";
-  if(s1.value == "CAg"){
-    var optionArray = ["|","camaro|Camaro","corvette|Corvette","impala|Impala"];
-  } else if(s1.value == "CAS"){
-    var optionArray = ["|","avenger|Avenger","challenger|Challenger","charger|Charger"];
-  } else if(s1.value == "CAM"){
-    var optionArray = ["|","mustang|Mustang","shelby|Shelby"];
+  if(s1.value == "cag"){
+    var optionArray = ["|","bAgriTech|BAgriTech","dAgriTech|DAgriTech","bSAgri|BSAgri","bSFor|BSFor"];
+  } else if(s1.value == "cas"){
+    var optionArray = ["|","bSMath|BSMath","bSBio|BSBio","bAComm|BAComm","bAPsych|BAPsych","bAPubAdmin|BAPubAdmin"];
+  } else if(s1.value == "cam"){
+    var optionArray = ["|","bSNursing|BSNursing","bSMidwifery|BSMidwifery"];
   }
-  else if(s1.value == "CBA"){
-    var optionArray = ["|","mustang|Mustang","shelby|Shelby"];
-  }
-
-  else if(s1.value == "CEn"){
-    var optionArray = ["|","mustang|Mustang","shelby|Shelby"];
+  else if(s1.value == "cba"){
+    var optionArray = ["|","bSAcc|BSAcc","bSBA in Finance|BSBA in Finance","bSBA in Marketing|BSBA in Marketing","bSBA in HR|BSBA in HR","bS in HRM|BS in HRM"];
   }
 
-  else if(s1.value == "CIT"){
-    var optionArray = ["|","mustang|Mustang","shelby|Shelby"];
+  else if(s1.value == "cen"){
+    var optionArray = ["|","bSCpE|BSCpE","bSCE|BSCE","bSECE|BSECE","bSEE|BSEE","bSIE|BSIE","bSME|BSME"];
   }
 
-  else if(s1.value == "CTE"){
-    var optionArray = ["|","mustang|Mustang","shelby|Shelby"];
+  else if(s1.value == "cit"){
+    var optionArray = ["|","bSCPT|BSCPT","bSELT|BSELT","bSELX|BSELX","bSFT|BSFT","bSMT|BSMT"];
+  }
+
+  else if(s1.value == "cte"){
+    var optionArray = ["|","bEED|BEED","bSEDinEnglish|BSEDinEnglish","bSEDinFilipino|BSEDinFilipino","bSEDinMath|BSEDinMath","bSEDinSocial|BSEDinSocial","bSEDinMapeh|BSEDinMapeh","bSEDinTLE|BSEDinTLE","iHK|IHK","bSEDinPhysics|BSEDinPhysics"];
   }
   for(var option in optionArray){
     var pair = optionArray[option].split("|");

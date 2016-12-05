@@ -256,7 +256,7 @@
                       <div class="form-group">
                             <label for="table" class="control-label col-xs-2">Table name</label>
                         <div class="col-xs-3">
-                            <input type="name" class="form-control" name="table" id="table" value="instructor_evaluator">
+                            <input type="name" class="form-control" name="table" id="table" value="student_subjectlist">
                         </div>
                         </div>
                       <div class="form-group">
@@ -315,7 +315,7 @@
                           echo "Success";
                           echo "<b> total $count records have been added to the table $table</b> ";
                           echo "<br>";
-                          echo "<a href='evaluatorstudent.php' class='btn btn-success'>Refresh Browser</a>";
+                          echo "<a href='uploadstudentcred.php' class='btn btn-success'>Refresh Browser</a>";
 
 
                           }
@@ -381,56 +381,7 @@
 <script src="dist/js/app.min.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 
-<script>
-  $(function () {
-    $("#example1").DataTable();
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false
-    });
-  });
-</script>
 
-<script>
-function populate(s1,s2){
-  var s1 = document.getElementById(s1);
-  var s2 = document.getElementById(s2);
-  s2.innerHTML = "";
-  if(s1.value == "CAg"){
-    var optionArray = ["|","camaro|Camaro","corvette|Corvette","impala|Impala"];
-  } else if(s1.value == "CAS"){
-    var optionArray = ["|","avenger|Avenger","challenger|Challenger","charger|Charger"];
-  } else if(s1.value == "CAM"){
-    var optionArray = ["|","mustang|Mustang","shelby|Shelby"];
-  }
-  else if(s1.value == "CBA"){
-    var optionArray = ["|","mustang|Mustang","shelby|Shelby"];
-  }
-
-  else if(s1.value == "CEn"){
-    var optionArray = ["|","mustang|Mustang","shelby|Shelby"];
-  }
-
-  else if(s1.value == "CIT"){
-    var optionArray = ["|","mustang|Mustang","shelby|Shelby"];
-  }
-
-  else if(s1.value == "CTE"){
-    var optionArray = ["|","mustang|Mustang","shelby|Shelby"];
-  }
-  for(var option in optionArray){
-    var pair = optionArray[option].split("|");
-    var newOption = document.createElement("option");
-    newOption.value = pair[0];
-    newOption.innerHTML = pair[1];
-    s2.options.add(newOption);
-  }
-}
-</script>
 
 </body>
 </html>
