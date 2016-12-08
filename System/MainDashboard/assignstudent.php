@@ -7,6 +7,9 @@
     }
 ?>
 
+
+
+
 <?php
                       require("db/db2.php");
 
@@ -18,10 +21,64 @@
                           }
                               $StudentID = $row['student_id'];
                               $StudentName = $row['student_name'];
-
+                              $StudentSubject=$row['subject_id'];
 
                       ?>
 
+
+
+<!--ADD ASSIGNED DATA TO DATABASE-->
+
+
+          
+          <?php
+
+          define('DB_HOST', 'localhost'); 
+          define('DB_NAME', 'capas_db');
+          define('DB_USER','root');
+          define('DB_PASSWORD',''); 
+
+          $con=mysql_connect(DB_HOST,DB_USER,DB_PASSWORD) or die("Failed to connect to MySQL: " . mysql_error()); 
+          $db=mysql_select_db(DB_NAME,$con) or die("Failed to connect to MySQL: " . mysql_error());
+
+            
+            if(isset($_POST)==true && empty($_POST)==false){
+
+                  $studentid=$_POST['studentlistid'];
+                  $studentname=$_POST['studentlistname'];
+                  $studentsubject=$_POST['studentlistsubject'];
+                  $instructorname=$_POST['instructorlist_name'];
+
+              foreach($studentid as $a => $b){
+
+
+               $sql = "INSERT INTO student_evaluate(student_id,student_name,subject,instructor_name) 
+               VALUES('$studentid[$a]','$studentname[$a]', '$studentsubject[$a]','$instructorname')";
+               
+               $res=mysql_query($sql);
+                                     
+
+               
+                                        If($res)
+                                            {
+                                        $assignsuccess= "Assigning Students to Instructor was Successul";
+                                            }
+                                          Else
+                                          {
+                                        $assignerror= "Error Assigning Students to Instructor was Successul";
+                                          }
+                   
+              
+
+
+            
+            }
+          }
+
+
+            ?>
+
+          <!--END ASSIGNMENT-->
 <!DOCTYPE html>
 <html>
 <head>
@@ -224,7 +281,7 @@
       <div class="row">
         <!-- Left col -->
         <section class="col-lg-12 connectedSortable">
-
+          
 
         <div class="box box-primary box-solid">
             <div class="box-header with-border">
@@ -267,13 +324,13 @@
                           <select class="form-control" id="college-select" name="student_college">
                            
                           
-                            <option value="cag">College of Agriculture</option>
-                            <option value="cam">College of Allied Medicine</option>
-                            <option value="cas">College of Arts and Sciences</option>
-                            <option value="cba">College of Business Administration</option>
-                            <option value="cen">College of Engineering</option>
-                            <option value="cit">College of Industrial Technology</option>
-                            <option value="cte">College of Teachers Education</option>
+                            <option value="College of Agriculture">College of Agriculture</option>
+                            <option value="College of Allied Medicine">College of Allied Medicine</option>
+                            <option value="College of Arts and Sciences">College of Arts and Sciences</option>
+                            <option value="College of Business Administration">College of Business Administration</option>
+                            <option value="College of Engineering">College of Engineering</option>
+                            <option value="College of Industrial Technology">College of Industrial Technology</option>
+                            <option value="College of Teachers Education">College of Teachers Education</option>
                             
 
                           </select>
@@ -316,12 +373,48 @@
               <!-- /.box -->
 
 
+
+
+              
+                  
+             
+
+
             <!--SEARCH RESULT-->
 
-        <div>
+        
+        <div class="row">
+          <!--STUDENT-->
+          <div class="col-md-6">
+            <div class="box box-primary box-solid">
+                 <div class="box-header with-border">
+                       <h3 class="box-title">SEARCHED STUDENTS</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+
+               <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">STUDENT RESULTS</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-striped">
+                      <form action="assignstudent.php" method="post">
+                        <thead>
+                          <th>Student ID</th>
+                          <th>Student Name</th>
+                          <th>Subject</th>
+                        </thead>
+                      <tbody>
+                        </table>
            <?php
-
-
   
                       mysql_connect("localhost","root");
                       mysql_select_db("capas_db");
@@ -329,19 +422,110 @@
                       while($row=mysql_fetch_array($res))
                       {
                           ?>
+
+            
+                    <td><input type="text" name="studentlistid[]" value="<?php echo $row['student_id']; ?>"/></td>
+                    <td><input type="text" name="studentlistname[]" value="<?php echo $row['student_name']; ?>"/></td>
+                    <td><input type="text" name="studentlistsubject[]" value="<?php echo $row['subject_id']; ?>"/></td>
+                    
+                          <?php
+                      }
+                      ?>
+                    
+                  
+
+
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+
+                </div>
+                <!-- /.box-body -->
+
+              </div>
+              <!-- /.box -->
+          </div>
+              <!--END STUDENT-->
+
+               <!--STUDENT-->
+          <div class="col-md-6">
+            <div class="box box-primary box-solid">
+                 <div class="box-header with-border">
+                       <h3 class="box-title">SEARCHED INSTRUCTOR</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+
+               <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">INSTRUCTOR RESULTS</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                  <table class="table table-bordered table-striped">
+                      <form action="assignstudent.php" method="post">
+                        <thead>
+                          <th>Instructor ID</th>
+                          <th>Instructor Name</th>
+                        </thead>
+                      <tbody>
+                        </table>
+
+           <?php
+
+
+  
+                      mysql_connect("localhost","root");
+                      mysql_select_db("capas_db");
+                      $res=mysql_query("SELECT * FROM instructor_subjectlist where college= '".$_REQUEST['student_college']."'");
+                      while($row=mysql_fetch_array($res))
+                      {
+                          ?>
                     <div class="form-group">
             
-                    <input type="text" name="student_list" value="<?php echo $StudentID; ?>"/>
-
+                    <input type="text" name="instructorlist_id" value="<?php echo $row['instructor_id']; ?>"/>
+                    <input type="text" name="instructorlist_name" value="<?php echo $row['instructor_name']; ?>"/>
+                    <hr>
+                     <?php echo '<input type="submit" name="submit2" class="btn btn-success" value="Assign"/>';?>
                     </div>
+                  </form>
 
 
                           <?php
                       }
+
                       ?>
+
+
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+
+                </div>
+                <!-- /.box-body -->
+
+              </div>
+              <!-- /.box -->
+          </div>
+              <!--END INSTRUCTOR-->
+
         </div>
 
           <!--END SEARCH RESULT-->
+
+          <?php if (isset($assignsuccess)) {echo "<div class=\"alert alert-success\"><strong>Note: </strong>" .$assignsuccess. "</div>"; }?>
+          <?php if (isset($assignerror)) {echo "<div class=\"alert alert-danger\"><strong>Note: </strong>" .$assignerror. "</div>"; }?>
+
+          
                
 
 
@@ -400,8 +584,8 @@
   // subjectName, course/college + yearLevel
   //              - kung anong course/college
   //                ang mga nagtetake.
-    ["MAT01c", "cag1,cen1,cba1,cam1,cit1"],
-    ["MAT10b", "CPE3,ME4"],
+    ["MAT01c", "College of Agriculture1"],
+    ["MAT10b", "BSCpE3"],
     ["CPE302", "CPE3,IE5"]
   ];
 
@@ -690,13 +874,13 @@
   var collegeObj = {
     
     
-    "cag":cagObj,
-    "cas":casObj,
-    "cam":camObj,
-    "cba":cbaObj,
-    "cen":cenObj,
-    "cit":citObj,
-    "cte":cteObj
+    "College of Agriculture":cagObj,
+    "College of Arts and Sciences":casObj,
+    "College of Allied Medicine":camObj,
+    "College of Business Administration":cbaObj,
+    "College of Engineering":cenObj,
+    "College of Industrial Technology":citObj,
+    "College of Teachers Education":cteObj
 
 
     

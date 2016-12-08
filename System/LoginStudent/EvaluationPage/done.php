@@ -1,23 +1,33 @@
 <?php
-   error_reporting(0);
-   session_start();
-   require 'db/connect.php';
-   
-   if(isset($_SESSION['student_id'])){
-      $userId = $_SESSION['student_id'];
+  error_reporting(0);
+  session_start();
+  
+  @ $db = mysqli_connect('127.0.0.1', 'root', '', 'capas_db');
+
+if (mysqli_connect_errno()) {
+  echo "failed to connect to database";
+  exit;
+}
+
+
+
+
+  if(isset($_SESSION['user'])){
+      $userId = $_SESSION['user'];
       $fname = $_SESSION['student_name'];
-       $college = $_SESSION['college_id'];
-       $course = $_SESSION['course_id'];
-       $year = $_SESSION['year_level'];
-       $sem= "sem_01";
-       $SY = "2016-2017";
-       $RP = "August-December";
+      $college = $_SESSION['student_college'];
+      $department = $_SESSION['student_dept'];
+      $year = $_SESSION['student_year'];
+      $sem= "sem_01";
+      $SY = "2016-2017";
+      $RP = "August-December";
+      $prof = @$_POST['professor'];
+      $_SESSION['prof-name']=$prof;
+      $subj=$_POST['subject'];
+      $_SESSION['subj']=$subj;
 
-      
-   }
-
+}
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -189,86 +199,22 @@
       </div>
 
       <!--EVALUATION PAGE-->
-      <div class="row">
-
-            <div class="col-sm-2">
-                  <img src="img/slsu.png" alt="logo" title="logo" />
-            </div>
-            <div class="col-sm-8" align="center">
-                  <h1>SOUTHERN LUZON STATE UNIVERSITY<br />COLLEGE OF ENGINEERING</h1>
-                  <h3>Online Qualitative Contribution Evaluation for Instruction/Teaching <br />Effectiveness of COE Instructors<br />
-                   Rating Period: <?php echo $RP;?><br />
-                   School Year: <?php echo $SY;?></h3>
-                   <hr/>
-            </div>
-            <div class="col-sm-2">
-                  <img src="img/cen.png" alt="logo" title="logo" /> 
-            </div> 
-      </div>
 
       <div class="jumbotron alert-success" align="center">
               <h3>SUCCESSFULLY EVALUATED!</h3>
             </div>
-            <h2>PROFESSORS EVALUATED: </h2>
-    <?php 
+            <h3 align="center">Would you like to Evaluate another Professor ? </h3>
+            <p align="center">If No, it will be logout automatically</p>
+   
+      <div class="link-wrapper" align="center">
 
-    /**
-    **this is the table where the student can see his or her evaluated professors
-    */
-    $i=0;
-    $sql = "SELECT ins_name,subj_code, evaluated FROM stud_prof WHERE student_id='$userId' AND evaluated='1'";
-    $query = mysqli_query($conn, $sql);
+          <button><a class="btn btn-success" href="student.php">Yes</a></button>
 
+          <button><a class="btn btn-danger" href="logout.php">No</a></button>
+
+      </div>
       
-      echo "<table class=\"table\">";
-      echo "<th><center>PROFESOR NAME</center></th>";
-      echo "<th><center>SUBJECT</center></th>";
-      echo "<th><center>EVALUATED</center></th>";
-      while($row = mysqli_fetch_array($query, MYSQLI_NUM)){
-      echo "<tr>";
-      echo "<td>"."<center>".$row[0]."</center>"."</td>";  
-      echo "<td>"."<center>".$subjCode=$row[1]."</center>"."</td>";  
-        $eval_d=$row[2];
 
-        if($eval_d=='1'){
-          $eval="DONE"; 
-          echo "<td>"."<center>".$eval."</center>"."</td>";
-          $i++;
-        }else{
-          $eval="";
-          echo "<td>"."<center>".$eval."</center>"."</td>";
-
-        }
-
-          
-          echo "</tr>";
-      }//endof while
-      echo "</table>";
-
-      $sql="SELECT COUNT(ins_id) FROM stud_prof WHERE student_id='$userId'";
-        $query= mysqli_query($conn, $sql);
-         if($query){
-          $row = mysqli_fetch_array($query); 
-            $sum = $row[0];
-            echo $sum. "<br />";
-          }
-            echo $i;
-          
-          if($i==$sum){
-              $sql="UPDATE student_evaluator SET activate='1' WHERE student_id='$userId'";
-                $ok=mysqli_query($conn, $sql);
-                if($ok){
-                    echo "YOU ARE DONE";
-                }
-
-          }
-
-
-      
-    ?>
-      <div class="link-wrapper"><h3><a href="student.php">Click here to evaluate another professor</a></h3></div>
-      
-      </form>
    </div>
 
   

@@ -42,13 +42,19 @@ if(@$_POST['login']){
             if($active == '1'){
                 $note= "You already took the Evaluation for this semester";
             }
+
+            else{
+             $note2 = "WRONG USERNAME OR PASSWORD,TRY AGAIN!";
+
+        }
     }
 
     if($username == $user && $password == $pwd){
-        $_SESSION['student_id'] = $user;
+
+        $_SESSION['user'] = $user;
         $_SESSION['student_name'] = $fname;
         $_SESSION['student_college'] = $college;
-        $_SESSION['student_dept'] = $course;
+        $_SESSION['student_dept'] = $department;
         $_SESSION['student_year'] = $year;
 
         /**$sql= "UPDATE student SET activate='1' WHERE stud_id='$user'";
@@ -60,10 +66,7 @@ if(@$_POST['login']){
 
     }
 
-        else{
-             $note2 = "WRONG USERNAME OR PASSWORD,TRY AGAIN!";
-
-        }
+        
 }
 
 
