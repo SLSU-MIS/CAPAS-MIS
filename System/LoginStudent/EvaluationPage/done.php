@@ -104,7 +104,7 @@ if (mysqli_connect_errno()) {
                 <img src="dist/img/slsulogo.png" class="img-circle" alt="User Image">
 
                 <p>
-                  CAPAS-ADMINISTRATOR
+                 <?php echo $fname;?>
                   <small>Revision May 2016</small>
                 </p>
               </li>
@@ -201,16 +201,16 @@ if (mysqli_connect_errno()) {
       <!--EVALUATION PAGE-->
 
       <div class="jumbotron alert-success" align="center">
-              <h3>SUCCESSFULLY EVALUATED!</h3>
+              <h3><i class="fa fa-check-circle-o fa-3x" aria-hidden="true"></i>SUCCESSFULLY EVALUATED!</h3>
             </div>
             <h3 align="center">Would you like to Evaluate another Professor ? </h3>
             <p align="center">If No, it will be logout automatically</p>
    
       <div class="link-wrapper" align="center">
 
-          <button><a class="btn btn-success" href="student.php">Yes</a></button>
+          <button><a class="btn btn-success" href="student.php"><i class="fa fa-check fa-lg" aria-hidden="true"></i>Yes</a></button>
 
-          <button><a class="btn btn-danger" href="logout.php">No</a></button>
+          <button><a class="btn btn-danger" href="logout.php"><i class="fa fa-times fa-lg" aria-hidden="true"></i>No</a></button>
 
       </div>
       

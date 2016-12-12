@@ -62,9 +62,9 @@
                                     $error_id = isset($_GET['err']) ? (int)$_GET['err'] : 0;
 
                                     if ($error_id == 1) {
-                                            echo "<div class=\"alert alert-danger\"><strong>".$errors[$error_id]."</strong></div>";
+                                            echo "<div class=\"alert alert-danger\"><i class=\"fa fa-user-times fa-2x\" aria-hidden=\"true\"></i><strong>".$errors[$error_id]."</strong></div>";
                                         }elseif ($error_id == 2) {
-                                            echo "<div class=\"alert alert-danger\"><strong>".$errors[$error_id]."</strong></div>";
+                                            echo "<div class=\"alert alert-danger\"><i class=\"fa fa-exclamation-triangle fa-3x\" aria-hidden=\"true\"></i><strong>".$errors[$error_id]."</strong></div>";
                                         }
                                ?> 
                         	<div class="form-top">

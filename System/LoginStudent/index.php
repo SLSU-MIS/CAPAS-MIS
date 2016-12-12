@@ -11,19 +11,18 @@ if(@$_POST['login']){
     $password = @$_POST['password'];
 
 
-    $sql = "SELECT student_id, student_pass, student_name,student_college, student_dept, student_year 
+    $sql = "SELECT student_id,student_name,student_college,student_dept,student_year,student_pass
     from student_evaluator WHERE student_id='$username' AND activate='0' LIMIT 1";
     $query = mysqli_query($conn, $sql);
 
     if ($query) {
         $row = mysqli_fetch_array($query, MYSQLI_NUM);
-        $user = $row[0];
-        $pwd =  $row[1];
-        $fname = $row[2];
-        $lname = $row[3];
-        $college = $row[4];
-        $course = $row[5];
-        $year = $row[6];
+        $user = $row[0];   
+        $fname = $row[1];
+        $college = $row[2];
+        $department = $row[3];
+        $year = $row[4];
+        $pwd =  $row[5];
         /*echo $user;
         echo $pwd;
         echo $fname;
@@ -131,8 +130,8 @@ if(@$_POST['login']){
                     </div>
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-3 form-box">
-                            <?php if (isset($note)) {echo "<div class=\"alert alert-danger\"><strong>Note: </strong>" .$note. "</div>"; }?>
-                            <?php if (isset($note2)) {echo "<div class=\"alert alert-danger\"><strong>Note: </strong>" .$note2. "</div>"; }?>
+                            <?php if (isset($note)) {echo "<div class=\"alert alert-danger\"><i class=\"fa fa-user-times fa-2x\" aria-hidden=\"true\"></i><strong>Note: </strong>" .$note. "</div>"; }?>
+                            <?php if (isset($note2)) {echo "<div class=\"alert alert-danger\"><i class=\"fa fa-exclamation-triangle fa-3x\" aria-hidden=\"true\"></i><strong>Note: </strong>" .$note2. "</div>"; }?>
                         	<div class="form-top">
                         		<div class="form-top-left">
                         			<h3>Student Credentials:</h3>

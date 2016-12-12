@@ -48,7 +48,7 @@ if (mysqli_connect_errno()) {
 
         if($numresults1==""){
 
-          $done="The Evaluation of Assigned Teachers is Already Done. Your evaluation records are already submitted. You may logout now";
+          $done="The Evaluation of Assigned Teachers is Already Done. Your evaluation records are already submitted. Submit button is disabled. You may logout now";
 
 
         }
@@ -65,6 +65,7 @@ if (mysqli_connect_errno()) {
 <!DOCTYPE html>
 <html>
 <head>
+  
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>CAPAS-ADMIN | Dashboard</title>
@@ -113,7 +114,7 @@ if (mysqli_connect_errno()) {
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="student.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>SLSU</b>CAPAS</span>
       <!-- logo for regular state and mobile devices -->
@@ -138,7 +139,7 @@ if (mysqli_connect_errno()) {
                 <img src="dist/img/slsulogo.png" class="img-circle" alt="User Image">
 
                 <p>
-                  CAPAS-ADMINISTRATOR
+                  <?php echo $fname;?>
                   <small>Revision May 2016</small>
                 </p>
               </li>
@@ -188,7 +189,7 @@ if (mysqli_connect_errno()) {
       <ul class="sidebar-menu">
         <li class="header">MANAGEMENT TABS</li>
         <li class="active treeview">
-          <a href="index.php">
+          <a href="student.php">
             <i class="fa fa-dashboard"></i> <span>Profile Information</span>
           </a>
           
@@ -236,25 +237,58 @@ if (mysqli_connect_errno()) {
       <div class="row">
 
             <div class="col-sm-2">
-                  <img src="img/slsu.png" alt="logo" title="logo" />
+                  <img src="img/slsu2.png" alt="logo" title="logo" />
             </div>
             <div class="col-sm-8" align="center">
-                  <h1>SOUTHERN LUZON STATE UNIVERSITY<br />COLLEGE OF ENGINEERING</h1>
-                  <h3>Online Qualitative Contribution Evaluation for Instruction/Teaching <br />Effectiveness of COE Instructors<br />
+                  <h1>SOUTHERN LUZON STATE UNIVERSITY<br /><?php echo $college;?></h1>
+                  <h3>Online Qualitative Contribution Evaluation for Instruction/Teaching <br />Effectiveness of Instructors<br />
                    Rating Period: <?php echo $RP;?><br />
                    School Year: <?php echo $SY;?></h3>
                    <hr/>
             </div>
             <div class="col-sm-2">
-                  <img src="img/cen.png" alt="logo" title="logo" /> 
+                  <?php
+                  
+                    if($college=="College of Agriculture"){
+                    echo '<img src="img/cag.png" alt="logo" title="logo" />';
+                        }
+
+                    if($college=="College of Arts and Sciences"){
+                    echo '<img src="img/cas.png" alt="logo" title="logo" />';
+                        }
+
+                    if($college=="College of Allied Medicine"){
+                    echo '<img src="img/cam.png" alt="logo" title="logo" />';
+                        }
+
+                    if($college=="College of Business Administration"){
+                    echo '<img src="img/cba.png" alt="logo" title="logo" />';
+                        }
+
+                    if($college=="College of Engineering"){
+                    echo '<img src="img/cen.png" alt="logo" title="logo" />';
+                        }
+
+                    if($college=="College of Industrial Technology"){
+                    echo '<img src="img/cit.png" alt="logo" title="logo" />';
+                        }
+
+                    if($college=="College of Teachers Education"){
+                    echo '<img src="img/cte.png" alt="logo" title="logo" />';
+                        }
+
+
+
+                  ?>
+
             </div> 
       </div>
       <hr>
-      <?php if (isset($noted)) {echo "<div class=\"alert alert-danger\"><strong>Note: </strong>" .$noted. "</div>"; }?>
-      <?php if (isset($done)) {echo "<div class=\"alert alert-danger\"><strong>Note: </strong>" .$done. "</div>"; }?>
+      <?php if (isset($noted)) {echo "<div class=\"alert alert-danger\"><strong><i class=\"fa fa-info-circle fa-2x\" aria-hidden=\"true\"></i>Note: </strong>" .$noted. "</div>"; }?>
+      <?php if (isset($done)) {echo "<div class=\"alert alert-danger\"><strong><i class=\"fa fa-info-circle fa-2x\" aria-hidden=\"true\"></i>Note: </strong>" .$done. "</div>"; }?>
 
           
-   <form action="studentverify.php">
+   <form action="studentverify.php" method="post">
 
       <!--EVALUATION OPTION-->
 
@@ -367,10 +401,14 @@ if (mysqli_connect_errno()) {
         </div>
         <!-- /.col -->
 
+      
+        
+
      
       <!--PAGE ANSWER-->
       <div class="row">
             <div class="col-md-12">
+              <p class="alert alert-warning "><strong><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>Note: Please Check If Choices Are Chosen, Else it will not submit if empty</strong></p>
           <div class="box box-success collapsed-box">
             <div class="box-header with-border">
               <h3 class="box-title">A. COMMITMENT</h3>
@@ -394,43 +432,43 @@ if (mysqli_connect_errno()) {
             </tr>
             <tr>
                <td><p >1. Demonstrates sensitivity to student's ability to attend and absorb content information.</td>
-               <td><input type="radio" name="a1" value="5" /></td>
-               <td><input type="radio" name="a1" value="4" /></td>
-               <td><input type="radio" name="a1" value="3" /></td>
-               <td><input type="radio" name="a1" value="2" /></td>
-               <td><input type="radio" name="a1" value="1" /></td>
+               <td><input type="radio" required name="a1" value="5" /></td>
+               <td><input type="radio" required name="a1" value="4" /></td>
+               <td><input type="radio" required name="a1" value="3" /></td>
+               <td><input type="radio" required name="a1" value="2" /></td>
+               <td><input type="radio" required name="a1" value="1" /></td>
             </tr>
             <tr>
                <td>2.   Integrates sensitively his/her learning objectives with those of the students in a collaborative process.</td>
-               <td><input type="radio" name="a2" value="5" /></td>
-               <td><input type="radio" name="a2" value="4" /></td>
-               <td><input type="radio" name="a2" value="3" /></td>
-               <td><input type="radio" name="a2" value="2" /></td>
-               <td><input type="radio" name="a2" value="1" /></td>
+               <td><input type="radio" required name="a2" value="5" /></td>
+               <td><input type="radio" required name="a2" value="4" /></td>
+               <td><input type="radio" required name="a2" value="3" /></td>
+               <td><input type="radio" required name="a2" value="2" /></td>
+               <td><input type="radio" required name="a2" value="1" /></td>
             </tr>
             <tr>
                <td>3.   Makes self available to students beyond official time.</td>
-               <td><input type="radio" name="a3" value="5" /></td>
-               <td><input type="radio" name="a3" value="4" /></td>
-               <td><input type="radio" name="a3" value="3" /></td>
-               <td><input type="radio" name="a3" value="2" /></td>
-               <td><input type="radio" name="a3" value="1" /></td>
+               <td><input type="radio" required name="a3" value="5" /></td>
+               <td><input type="radio" required name="a3" value="4" /></td>
+               <td><input type="radio" required name="a3" value="3" /></td>
+               <td><input type="radio" required name="a3" value="2" /></td>
+               <td><input type="radio" required name="a3" value="1" /></td>
             </tr>
             <tr>
                <td>4.   Regularly comes to class on time, well-groomed and well-prepared to complete assigned responsibilities.</td>
-               <td><input type="radio" name="a4" value="5" /></td>
-               <td><input type="radio" name="a4" value="4" /></td>
-               <td><input type="radio" name="a4" value="3" /></td>
-               <td><input type="radio" name="a4" value="2" /></td>
-               <td><input type="radio" name="a4" value="1" /></td>
+               <td><input type="radio" required name="a4" value="5" /></td>
+               <td><input type="radio" required name="a4" value="4" /></td>
+               <td><input type="radio" required name="a4" value="3" /></td>
+               <td><input type="radio" required name="a4" value="2" /></td>
+               <td><input type="radio" required name="a4" value="1" /></td>
             </tr>
             <tr>
                <td>5.   Keeps accurate records of student's performance and prompt submission of the same.</td>
-               <td><input type="radio" name="a5" value="5" /></td>
-               <td><input type="radio" name="a5" value="4" /></td>
-               <td><input type="radio" name="a5" value="3" /></td>
-               <td><input type="radio" name="a5" value="2" /></td>
-               <td><input type="radio" name="a5" value="1" /></td>
+               <td><input type="radio" required name="a5" value="5" /></td>
+               <td><input type="radio" required name="a5" value="4" /></td>
+               <td><input type="radio" required name="a5" value="3" /></td>
+               <td><input type="radio" required name="a5" value="2" /></td>
+               <td><input type="radio" required name="a5" value="1" /></td>
             </tr>
             </table>
             </div>
@@ -467,43 +505,43 @@ if (mysqli_connect_errno()) {
                </tr>
                <tr>
                   <td>1.   Demonstrates mastery of the subject matter (explain the subject matter without relying solely on the prescribed textbook).</td>
-                  <td><input type="radio" name="b1" value="5" /></td>
-                  <td><input type="radio" name="b1" value="4" /></td>
-                  <td><input type="radio" name="b1" value="3" /></td>
-                  <td><input type="radio" name="b1" value="2" /></td>
-                  <td><input type="radio" name="b1" value="1" /></td>
+                  <td><input type="radio" required name="b1" value="5" /></td>
+                  <td><input type="radio" required name="b1" value="4" /></td>
+                  <td><input type="radio" required name="b1" value="3" /></td>
+                  <td><input type="radio" required name="b1" value="2" /></td>
+                  <td><input type="radio" required name="b1" value="1" /></td>
                </tr>
                <tr>
                   <td>2.   Draws and share information on the state of the art theory and practice in his/her discipline.</td>
-                  <td><input type="radio" name="b2" value="5" /></td>
-                  <td><input type="radio" name="b2" value="4" /></td>
-                  <td><input type="radio" name="b2" value="3" /></td>
-                  <td><input type="radio" name="b2" value="2" /></td>
-                  <td><input type="radio" name="b2" value="1" /></td>
+                  <td><input type="radio" required name="b2" value="5" /></td>
+                  <td><input type="radio" required name="b2" value="4" /></td>
+                  <td><input type="radio" required name="b2" value="3" /></td>
+                  <td><input type="radio" required name="b2" value="2" /></td>
+                  <td><input type="radio" required name="b2" value="1" /></td>
                </tr>
                <tr>
                   <td>3.   Integrates subject to practical circumstances and learning intents/ purposes of students.</td>
-                  <td><input type="radio" name="b3" value="5"  /></td>
-                  <td><input type="radio" name="b3" value="4"  /></td>
-                  <td><input type="radio" name="b3" value="3"  /></td>
-                  <td><input type="radio" name="b3" value="2"  /></td>
-                  <td><input type="radio" name="b3" value="1"  /></td>
+                  <td><input type="radio" required name="b3" value="5"  /></td>
+                  <td><input type="radio" required name="b3" value="4"  /></td>
+                  <td><input type="radio" required name="b3" value="3"  /></td>
+                  <td><input type="radio" required name="b3" value="2"  /></td>
+                  <td><input type="radio" required name="b3" value="1"  /></td>
                </tr>  
                <tr>
                   <td>4.   Explains the relevance of present topics to the previous lessons and relates the subjects matter to relevant current issues and/or daily life activities.</td>
-                  <td><input type="radio" name="b4" value="5"  /></td>
-                  <td><input type="radio" name="b4" value="4"  /></td>
-                  <td><input type="radio" name="b4" value="3"  /></td>
-                  <td><input type="radio" name="b4" value="2"  /></td>
-                  <td><input type="radio" name="b4" value="1"  /></td>
+                  <td><input type="radio" required name="b4" value="5"  /></td>
+                  <td><input type="radio" required name="b4" value="4"  /></td>
+                  <td><input type="radio" required name="b4" value="3"  /></td>
+                  <td><input type="radio" required name="b4" value="2"  /></td>
+                  <td><input type="radio" required name="b4" value="1"  /></td>
                </tr>
                <tr>
                   <td>5.   Demonstrates up-to-date knowledge and/or awareness on current trends and issues.</td>
-                  <td><input type="radio" name="b5" value="5"  /></td>
-                  <td><input type="radio" name="b5" value="4"  /></td>
-                  <td><input type="radio" name="b5" value="3"  /></td>
-                  <td><input type="radio" name="b5" value="2" /></td>
-                  <td><input type="radio" name="b5" value="1"  /></td>
+                  <td><input type="radio" required name="b5" value="5"  /></td>
+                  <td><input type="radio" required name="b5" value="4"  /></td>
+                  <td><input type="radio" required name="b5" value="3"  /></td>
+                  <td><input type="radio" required name="b5" value="2" /></td>
+                  <td><input type="radio" required name="b5" value="1"  /></td>
                </tr>  
          </table>
             </div>
@@ -532,43 +570,43 @@ if (mysqli_connect_errno()) {
              <table class="table">
                 <tr>
                   <td>1.   Create teaching strategies that allow students to practice using concepts they need to understand (interactive discussion).</td>
-                  <td><input type="radio" name="c1" value="5"  /></td>
-                  <td><input type="radio" name="c1" value="4"  /></td>
-                  <td><input type="radio" name="c1" value="3"  /></td>
-                  <td><input type="radio" name="c1" value="2"  /></td>
-                  <td><input type="radio" name="c1" value="1"  /></td>
+                  <td><input type="radio" required name="c1" value="5"  /></td>
+                  <td><input type="radio" required name="c1" value="4"  /></td>
+                  <td><input type="radio" required name="c1" value="3"  /></td>
+                  <td><input type="radio" required name="c1" value="2"  /></td>
+                  <td><input type="radio" required name="c1" value="1"  /></td>
                </tr>
                <tr>
                   <td>2.   Enhances student self-esteem and/or gives due recognition to student's performance/potentials.</td>
-                  <td><input type="radio" name="c2" value="5"  /></td>
-                  <td><input type="radio" name="c2" value="4"  /></td>
-                  <td><input type="radio" name="c2" value="3"  /></td>
-                  <td><input type="radio" name="c2" value="2"  /></td>
-                  <td><input type="radio" name="c2" value="1"  /></td>
+                  <td><input type="radio" required name="c2" value="5"  /></td>
+                  <td><input type="radio" required name="c2" value="4"  /></td>
+                  <td><input type="radio" required name="c2" value="3"  /></td>
+                  <td><input type="radio" required name="c2" value="2"  /></td>
+                  <td><input type="radio" required name="c2" value="1"  /></td>
                </tr>
                <tr>
                   <td>3.   Allows students to create their own course with objectives and realistically defined student-professor rules and make them accountable for their performance.</td>
-                  <td><input type="radio" name="c3" value="5"  /></td>
-                  <td><input type="radio" name="c3" value="4"  /></td>
-                  <td><input type="radio" name="c3" value="3"  /></td>
-                  <td><input type="radio" name="c3" value="2"  /></td>
-                  <td><input type="radio" name="c3" value="1"  /></td>
+                  <td><input type="radio" required name="c3" value="5"  /></td>
+                  <td><input type="radio" required name="c3" value="4"  /></td>
+                  <td><input type="radio" required name="c3" value="3"  /></td>
+                  <td><input type="radio" required name="c3" value="2"  /></td>
+                  <td><input type="radio" required name="c3" value="1"  /></td>
                </tr>  
                <tr>
                   <td>4.   Allows students to think independently and make their own decisions and holding them accountable for their performance based largely on their success in executing decisions.</td>
-                  <td><input type="radio" name="c4" value="5"  /></td>
-                  <td><input type="radio" name="c4" value="4"  /></td>
-                  <td><input type="radio" name="c4" value="3"  /></td>
-                  <td><input type="radio" name="c4" value="2"  /></td>
-                  <td><input type="radio" name="c4" value="1"  /></td>
+                  <td><input type="radio" required name="c4" value="5"  /></td>
+                  <td><input type="radio" required name="c4" value="4"  /></td>
+                  <td><input type="radio" required name="c4" value="3"  /></td>
+                  <td><input type="radio" required name="c4" value="2"  /></td>
+                  <td><input type="radio" required name="c4" value="1"  /></td>
                </tr>
                <tr>
                   <td>5.   Encourage students to learn beyond what is required and help/guide the students how to apply the concepts learned.</td>
-                  <td><input type="radio" name="c5" value="5"  /></td>
-                  <td><input type="radio" name="c5" value="4"  /></td>
-                  <td><input type="radio" name="c5" value="3"  /></td>
-                  <td><input type="radio" name="c5" value="2"  /></td>
-                  <td><input type="radio" name="c5" value="1"  /></td>
+                  <td><input type="radio" required name="c5" value="5"  /></td>
+                  <td><input type="radio" required name="c5" value="4"  /></td>
+                  <td><input type="radio" required name="c5" value="3"  /></td>
+                  <td><input type="radio" required name="c5" value="2"  /></td>
+                  <td><input type="radio" required name="c5" value="1"  /></td>
                </tr>
            </table>
             </div>
@@ -605,43 +643,43 @@ if (mysqli_connect_errno()) {
                </tr>
                <tr>
                   <td>1.   Create opportunities for intensive and/or extensive contribution of students in the class activities (e.g. breaks class into dyads, triads, or buzz/task groups).</td>
-                  <td><input type="radio" name="d1" value="5"  /></td>
-                  <td><input type="radio" name="d1" value="4"  /></td>
-                  <td><input type="radio" name="d1" value="3"  /></td>
-                  <td><input type="radio" name="d1" value="2"  /></td>
-                  <td><input type="radio" name="d1" value="1"  /></td>
+                  <td><input type="radio" required name="d1" value="5"  /></td>
+                  <td><input type="radio" required name="d1" value="4"  /></td>
+                  <td><input type="radio" required name="d1" value="3"  /></td>
+                  <td><input type="radio" required name="d1" value="2"  /></td>
+                  <td><input type="radio" required name="d1" value="1"  /></td>
                </tr>
                <tr>
                   <td>2.   Assumes roles as facilitator, resource person, coach, inquisitor, integrator, referee in drawing students to contribute to knowledge and understanding of the concepts t hand.</td>
-                  <td><input type="radio" name="d2" value="5"  /></td>
-                  <td><input type="radio" name="d2" value="4"  /></td>
-                  <td><input type="radio" name="d2" value="3"  /></td>
-                  <td><input type="radio" name="d2" value="2"  /></td>
-                  <td><input type="radio" name="d2" value="1"  /></td>
+                  <td><input type="radio" required name="d2" value="5"  /></td>
+                  <td><input type="radio" required name="d2" value="4"  /></td>
+                  <td><input type="radio" required name="d2" value="3"  /></td>
+                  <td><input type="radio" required name="d2" value="2"  /></td>
+                  <td><input type="radio" required name="d2" value="1"  /></td>
                </tr>
                <tr>
                   <td>3.   Design and implements learning conditions and experience that promotes healthy exchange and/or confrontations.</td>
-                  <td><input type="radio" name="d3" value="5"  /></td>
-                  <td><input type="radio" name="d3" value="4"  /></td>
-                  <td><input type="radio" name="d3" value="3"  /></td>
-                  <td><input type="radio" name="d3" value="2"  /></td>
-                  <td><input type="radio" name="d3" value="1"  /></td>
+                  <td><input type="radio" required name="d3" value="5"  /></td>
+                  <td><input type="radio" required name="d3" value="4"  /></td>
+                  <td><input type="radio" required name="d3" value="3"  /></td>
+                  <td><input type="radio" required name="d3" value="2"  /></td>
+                  <td><input type="radio" required name="d3" value="1"  /></td>
                </tr>  
                <tr>
                   <td>4.   Structures/re-structures learning and teaching-learning context to enhance attainment of collective learning objectives.</td>
-                  <td><input type="radio" name="d4" value="5"  /></td>
-                  <td><input type="radio" name="d4" value="4"  /></td>
-                  <td><input type="radio" name="d4" value="3"  /></td>
-                  <td><input type="radio" name="d4" value="2"  /></td>
-                  <td><input type="radio" name="d4" value="1"  /></td>
+                  <td><input type="radio" required name="d4" value="5"  /></td>
+                  <td><input type="radio" required name="d4" value="4"  /></td>
+                  <td><input type="radio" required name="d4" value="3"  /></td>
+                  <td><input type="radio" required name="d4" value="2"  /></td>
+                  <td><input type="radio" required name="d4" value="1"  /></td>
                </tr>
                <tr>
                   <td>5.   Use of instructional materials (audio/video materials, fieldtrips, film showing, computer-aided instruction and etc. ) to reinforce learning processes.</td>
-                  <td><input type="radio" name="d5" value="5"  /></td>
-                  <td><input type="radio" name="d5" value="4"  /></td>
-                  <td><input type="radio" name="d5" value="3"  /></td>
-                  <td><input type="radio" name="d5" value="2"  /></td>
-                  <td><input type="radio" name="d5" value="1"  /></td>
+                  <td><input type="radio" required name="d5" value="5"  /></td>
+                  <td><input type="radio" required name="d5" value="4"  /></td>
+                  <td><input type="radio" required name="d5" value="3"  /></td>
+                  <td><input type="radio" required name="d5" value="2"  /></td>
+                  <td><input type="radio" required name="d5" value="1"  /></td>
                </tr>
             </table>
             </div>
@@ -651,8 +689,15 @@ if (mysqli_connect_errno()) {
         </div>
         <!-- /.col -->
       </div><!-- /END OF THE ROW -->
-      <input type="submit" name="submit" class="btn btn-danger btn-lg"  value="Submit" />
-    
+      <?php
+      if($numresults1 !=0){
+
+          echo '<input type="submit" name="submit" class="btn btn-danger btn-lg"  value="Submit"/>';
+          }
+          else{
+            echo "<div class=\"alert alert-danger\"><strong><i class=\"fa fa-info-circle fa-2x\" aria-hidden=\"true\"></i>Note: Submit Button Is Already Disabled, Evaluation is already submitted</strong></div>";
+          }
+      ?>
     <!--END OF SECTION-->
     </section>
 
@@ -668,7 +713,18 @@ if (mysqli_connect_errno()) {
   </footer>
 
 </div>
+
+
+
+
+
+
+
 <!-- ./wrapper -->
+
+
+
+
 
 <!-- jQuery 2.2.0 -->
 <script src="plugins/jQuery/jQuery-2.2.0.min.js"></script>
@@ -678,6 +734,7 @@ if (mysqli_connect_errno()) {
 <script>
   $.widget.bridge('uibutton', $.ui.button);
 </script>
+
 <!-- Bootstrap 3.3.6 -->
 <script src="bootstrap/js/bootstrap.min.js"></script>
 
