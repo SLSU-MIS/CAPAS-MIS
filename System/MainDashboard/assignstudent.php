@@ -23,6 +23,7 @@
                               $StudentName = $row['student_name'];
                               $StudentSubject=$row['subject_id'];
 
+
                       ?>
 
 
@@ -48,12 +49,14 @@
                   $studentname=$_POST['studentlistname'];
                   $studentsubject=$_POST['studentlistsubject'];
                   $instructorname=$_POST['instructorlist_name'];
+                  $instructorcollege=$_POST['instructorlist_college'];
+                  $instructordept=$_POST['instructorlist_dept'];
 
               foreach($studentid as $a => $b){
 
 
-               $sql = "INSERT INTO student_evaluate(student_id,student_name,subject,instructor_name) 
-               VALUES('$studentid[$a]','$studentname[$a]', '$studentsubject[$a]','$instructorname')";
+               $sql = "INSERT INTO student_evaluate(student_id,student_name,subject,instructor_name,instructor_college,instructor_dept) 
+               VALUES('$studentid[$a]','$studentname[$a]', '$studentsubject[$a]','$instructorname','$instructorcollege','$instructordept')";
                
                $res=mysql_query($sql);
                                      
@@ -65,7 +68,7 @@
                                             }
                                           Else
                                           {
-                                        $assignerror= "Error Assigning Students to Instructor was Successul";
+                                        $assignerror= "Error Assigning Students";
                                           }
                    
               
@@ -418,7 +421,7 @@
   
                       mysql_connect("localhost","root");
                       mysql_select_db("capas_db");
-                      $res=mysql_query("SELECT * FROM student_subjectlist where college= '".$_REQUEST['student_college']."'");
+                      $res=mysql_query("SELECT * FROM student_subjectlist where college= '".$_REQUEST['student_college']."' && department= '".$_REQUEST['student_department']."' && section= '".$_REQUEST['student_section']."' && subject_id= '".$_REQUEST['student_subject']."'");
                       while($row=mysql_fetch_array($res))
                       {
                           ?>
@@ -475,9 +478,11 @@
                         <thead>
                           <th>Instructor ID</th>
                           <th>Instructor Name</th>
+                          <th>College</th>
+                          <th>Dept</th>
                         </thead>
                       <tbody>
-                        </table>
+                        
 
            <?php
 
@@ -485,25 +490,34 @@
   
                       mysql_connect("localhost","root");
                       mysql_select_db("capas_db");
-                      $res=mysql_query("SELECT * FROM instructor_subjectlist where college= '".$_REQUEST['student_college']."'");
+                      $res=mysql_query("SELECT * FROM instructor_subjectlist where college= '".$_REQUEST['student_college']."' && department= '".$_REQUEST['student_department']."' && section= '".$_REQUEST['student_section']."' && subject= '".$_REQUEST['student_subject']."'");
                       while($row=mysql_fetch_array($res))
                       {
                           ?>
                     <div class="form-group">
-            
-                    <input type="text" name="instructorlist_id" value="<?php echo $row['instructor_id']; ?>"/>
-                    <input type="text" name="instructorlist_name" value="<?php echo $row['instructor_name']; ?>"/>
-                    <hr>
-                     <?php echo '<input type="submit" name="submit2" class="btn btn-success" value="Assign"/>';?>
+                    <tr>
+                    <td><input type="text" name="instructorlist_id" value="<?php echo $row['instructor_id']; ?>"/></td>
+                    <td><input type="text" name="instructorlist_name" value="<?php echo $row['instructor_name']; ?>"/></td>
+                    <td><input type="text" name="instructorlist_college" value="<?php echo $row['college']; ?>"/></td>
+                    <td><input type="text" name="instructorlist_dept" value="<?php echo $row['department']; ?>"/></td>
+                    
+                    
                     </div>
-                  </form>
+                    </tr>
+
 
 
                           <?php
                       }
 
+
                       ?>
 
+                      </tbody>
+                      </table>
+                      <hr>
+                      <?php echo '<input type="submit" name="submit2" class="btn btn-success btn-lg" value="Assign"/>';?>
+                  </form>
 
                 </div>
                 <!-- /.box-body -->

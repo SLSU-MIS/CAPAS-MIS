@@ -337,33 +337,65 @@
                       <div id="page-content-wrapper">
             <?php if (isset($note)) {echo "<div class=\"alert alert-success\"><strong>Note: </strong>" .$note. "</div>"; }?>
 
-            <div class="alert alert-warning"><strong>Note:</strong> You can only view the data once per professors.<br />
+            
             <p>Total Number of Students: <?php echo $total_stud?></p>
             <p>Number of Students Who Took the Evaluation: <?php echo $total_take?></p>
             </div>
             <form role="form "method="post" action="resultstudent.php">
-                <div class="row1">
-                    <input type="submit" name="reset" class="btn btn-link btn-md" value="Reset" style="{float: left;}" />
-                </div>
+               
+
            
             <div class="form-group col-sm-12" align="center">
-                <h2>CHOOSE THE PROFESSOR</h2>
-                    <select name="prof"><option><?php echo $option1;?></option></select>
-                    <input type="submit" class="btn btn-warning" name="sub">
+                <h2>CHOOSE THE PROFESSORS</h2>
+
+
+                 <table id="example1" class="table table-bordered table-striped">
+                    <form action="assignstudent.php?college=<?php echo $_REQUEST['student_college']; ?>" method="POST">
+                    <thead>
+                    <tr>
+                      <th>COLLEGE</th>
+                      <th>DEPARTMENT</th>
+                    </tr>
+                    </thead>
+                    <thead>
+                    <tr>
+                      <th>
+
+                       <div>
+                          <select class="form-control" id="college-select" name="student_college">
+                           
+                          
+                            <option value="College of Agriculture">College of Agriculture</option>
+                            <option value="College of Allied Medicine">College of Allied Medicine</option>
+                            <option value="College of Arts and Sciences">College of Arts and Sciences</option>
+                            <option value="College of Business Administration">College of Business Administration</option>
+                            <option value="College of Engineering">College of Engineering</option>
+                            <option value="College of Industrial Technology">College of Industrial Technology</option>
+                            <option value="College of Teachers Education">College of Teachers Education</option>
+                            
+
+                          </select>
+                      </div>
+                      </th>
+                            <th>
+                             <select class="form-control" id="dept-select" name="student_department"></select>
+                            </th>
+                            
+                            
+                            <th>
+                                <input type="submit" name="submit" class="btn btn-success" value="SEARCH QUERY"/>
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    </form>
+                    </tbody>
+                  </table>
                 </form>
              </div>
              
              <div class="row">
-                <?php 
-                if ($_POST['sub']){
-                    
-                    if(isset($prof) && $prof != "CHOOSE ONE"){
-                    include "resultstudent-inc.php";
-                    }
-                }
-
-
-                ?>
                 
              </div>
         </div>
@@ -421,56 +453,8 @@
 <script src="dist/js/app.min.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 
-<script>
-  $(function () {
-    $("#example1").DataTable();
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false
-    });
-  });
-</script>
 
-<script>
-function populate(s1,s2){
-  var s1 = document.getElementById(s1);
-  var s2 = document.getElementById(s2);
-  s2.innerHTML = "";
-  if(s1.value == "CAg"){
-    var optionArray = ["|","bSAg|BSAg","bSFor|BSFor","bSTech|BSTech"];
-  } else if(s1.value == "CAS"){
-    var optionArray = ["|","bSAg|BSAg","bSFor|BSFor","bSTech|BSTech"];
-  } else if(s1.value == "CAM"){
-    var optionArray = ["|","bSAg|BSAg","bSFor|BSFor","bSTech|BSTech"];
-  }
-  else if(s1.value == "CBA"){
-    var optionArray = ["|","bSAg|BSAg","bSFor|BSFor","bSTech|BSTech"];
-  }
 
-  else if(s1.value == "CEn"){
-    var optionArray = ["|","bSAg|BSAg","bSFor|BSFor","bSTech|BSTech"];
-  }
-
-  else if(s1.value == "CIT"){
-    var optionArray = ["|","bSAg|BSAg","bSFor|BSFor","bSTech|BSTech"];
-  }
-
-  else if(s1.value == "CTE"){
-    var optionArray = ["|","bSAg|BSAg","bSFor|BSFor","bSTech|BSTech"];
-  }
-  for(var option in optionArray){
-    var pair = optionArray[option].split("|");
-    var newOption = document.createElement("option");
-    newOption.value = pair[0];
-    newOption.innerHTML = pair[1];
-    s2.options.add(newOption);
-  }
-}
-</script>
 
 </body>
 </html>
