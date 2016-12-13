@@ -628,7 +628,7 @@
             <div class="box-body">
              <table class="table">
 
-               <a class="btn btn-primary btn-lg">EXPORT LIST</a>
+               <a class="btn btn-primary btn-lg" href="exportstudentlist.php">EXPORT LIST</a>
                 
            </table>
             </div>
