@@ -377,7 +377,7 @@
             <h3 class="alert alert-warning"><i class="fa fa-user" aria-hidden="true"></i>Total Number of Students: <?php echo $student?></h3>
             <h3 class="alert alert-success"><i class="fa fa-check-square-o" aria-hidden="true"></i>Number of Students Evaluates in Instructors: <?php echo $total?></h3>
             </div>
-            <form role="form "method="post" action="exportstudentoverall.php">
+            <form role="form "method="post" action="exportstudenttally.php">
                
 
            
@@ -419,7 +419,7 @@
                             
                             
                             <th>
-                                <input type="submit" name="submit" class="btn btn-success" value="OVERALL RESULTS"/>
+                                <input type="submit" name="submit" class="btn btn-success" value="SEE TALLY"/>
                                 
                             </th>
                         </tr>
@@ -432,7 +432,7 @@
                 </form>
              </div>
 
-             <a href="resultstudenttally.php" name="submit2" class="btn btn-primary btn-lg"/>SEE TALLY RESULTS</a>
+           
              
              <div class="row">
                 

@@ -43,7 +43,15 @@ if (mysqli_connect_errno()) {
          $result2 = $db->query($query1);
         $numresults2 = $result2->num_rows;
 
+        $result3 = $db->query($query1);
+        $numresults3 = $result3->num_rows;
+
+        $result4 = $db->query($query1);
+        $numresults4 = $result4->num_rows;
+
         $instructordone = $_REQUEST['professor'];
+        $instructorcollege = $row['instructor_college'];
+        $instructordept = $row['instructor_dept'];
         $subjectdone = $_REQUEST['professor'];
 
         if($numresults1==""){
@@ -324,6 +332,54 @@ if (mysqli_connect_errno()) {
                           for ($i=0; $i < $numresults2; $i++) { 
                             $row = $result2->fetch_assoc();
                             echo"<option value=\"".$row['subject']."\">".$row['subject']."</option>";
+                          }
+                        }
+                        else {
+                          $_SESSION['user']=0;
+                          header("Location: login.php");
+                        }
+                        $db->close();
+                      ?>
+
+
+            </select>
+           </div>
+      </div>
+
+      <hr>
+
+       <div class="row">
+
+            <div class="col-sm-6" align="left">
+               <label for="faculty"><b>Instructor Designated College:</b></label>
+               
+
+                <select class="selectpicker show-pick form-control" name="college">
+                      <?php
+                        if ($numresults3 !=0) {
+                          for ($i=0; $i < $numresults3; $i++) { 
+                            $row = $result3->fetch_assoc();
+                            echo"<option value=\"".$row['instructor_college']."\">".$row['instructor_college']."</option>";
+                          }
+                        }
+                        else {
+                          $_SESSION['user']=0;
+                          header("Location: login.php");
+                        }
+                        $db->close();
+                      ?>
+
+               </select>
+            </div>
+            <div class="col-sm-6" align="left">
+             <label for="subject">Instructor Designated Department:</label>
+
+             <select class="selectpicker show-pick form-control" name="department">
+              <?php
+                        if ($numresults4 !=0) {
+                          for ($i=0; $i < $numresults4; $i++) { 
+                            $row = $result4->fetch_assoc();
+                            echo"<option value=\"".$row['instructor_dept']."\">".$row['instructor_dept']."</option>";
                           }
                         }
                         else {

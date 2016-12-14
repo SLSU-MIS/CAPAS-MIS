@@ -10,6 +10,10 @@ if (mysqli_connect_errno()) {
 $studentid = $_SESSION['user'];
 $professor = $_REQUEST['professor'];
 $subject =$_REQUEST['subject'];
+$college =$_REQUEST['college'];
+$department =$_REQUEST['department'];
+
+
 
 $a1 = $_REQUEST['a1'];
 $a2 = $_REQUEST['a2'];
@@ -78,8 +82,8 @@ $AVERAGE=$SUM/20;
 $activate = "1";
 $type="Student Evaluation";
 
-$query = "INSERT INTO answer(student_name,instructor_name,subject,A1,A2,A3,A4,A5,B1,B2,B3,B4,B5,C1,C2,C3,C4,C5,D1,D2,D3,D4,D5,average,rating,type) values 
-('".$studentid."', '".$professor."','".$subject."', '".$a1."','".$a2."','".$a3."','".$a4."','".$a5."', '".$b1."','".$b2."','".$b3."','".$b4."','".$b5."'
+$query = "INSERT INTO answer(student_name,instructor_name,instructor_college,instructor_dept,subject,A1,A2,A3,A4,A5,B1,B2,B3,B4,B5,C1,C2,C3,C4,C5,D1,D2,D3,D4,D5,average,rating,type) values 
+('".$studentid."', '".$professor."','".$college."','".$department."','".$subject."', '".$a1."','".$a2."','".$a3."','".$a4."','".$a5."', '".$b1."','".$b2."','".$b3."','".$b4."','".$b5."'
 	, '".$c1."','".$c2."','".$c3."','".$c4."','".$c5."', '".$d1."','".$d2."','".$d3."','".$d4."','".$d5."','".$AVERAGE."','".$RATING."','".$type."')";
 
 $result = $db->query($query);
