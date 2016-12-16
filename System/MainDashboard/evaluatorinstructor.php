@@ -20,6 +20,7 @@
     $Sid = $_POST['ins_id'];
     $College = $_POST['slct1'];
     $Department = $_POST['slct2'];
+    $Dean = $_POST['dean'];
     $Password = $_POST['ins_pass'];
 
     /**echo $Fname;
@@ -33,8 +34,8 @@
     echo $password;**/
 
 
-                    $sql = "INSERT INTO instructor_evaluator(ins_id,ins_name,ins_college,ins_dept,ins_pass) 
-                            VALUES('$Sid','$Fname','$College','$Department','$Password')";
+                    $sql = "INSERT INTO instructor_evaluator(ins_id,ins_name,ins_college,ins_dept,ins_pass,dean) 
+                            VALUES('$Sid','$Fname','$College','$Department','$Password','$Dean')";
                          $query = mysqli_query($conn, $sql);
                          if($query){
                               $note= "SUCCESSFULLY Registered";
@@ -302,6 +303,7 @@
                   <th>College</th>
                   <th>Department</th>
                   <th>Password</th>
+                  <th>Dean?</th>
                   <th>ACTION</th>
                 </tr>
 
@@ -322,6 +324,7 @@
                   <td><?php echo $row['ins_college']; ?></td>
                   <td><?php echo $row['ins_dept']; ?></td>
                   <td><?php echo $row['ins_pass']; ?></td>
+                  <td><?php echo $row['dean']; ?></td>
                   <td>
                     <a class="btn btn-danger" href="deleteinstructor.php?ins_id=<?php echo $row['ins_id']; ?>">Delete</a>&nbsp;&nbsp;
                     <a class="btn btn-warning" href="updateinstructor.php?ins_id=<?php echo $row['ins_id']; ?>">Edit</a>
@@ -429,6 +432,15 @@
 
                               <div class="col-sm-6">
                                 <input name="ins_pass" type="text" class="form-control" placeholder="Password">
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Dean?</label>
+
+                              <div class="col-sm-6">
+                                <input type="radio" required name="dean" value="Yes"  />Yes
+                                <input type="radio" required name="dean" value="No"  />No
                               </div>
                             </div>
                             
@@ -563,7 +575,7 @@
                           echo "Success";
                           echo "<b> total $count records have been added to the table $table</b> ";
                           echo "<br>";
-                          echo "<a href='evaluatorstudent.php' class='btn btn-success'>Refresh Browser</a>";
+                          echo "<a href='evaluatorinstructor.php' class='btn btn-success'>Refresh Browser</a>";
 
 
                           }
@@ -674,22 +686,22 @@ function populate(s1,s2){
   var s2 = document.getElementById(s2);
   s2.innerHTML = "";
   if(s1.value == "College of Agriculture"){
-    var optionArray = ["|","bAgriTech|BAgriTech","dAgriTech|DAgriTech","bSAgri|BSAgri","bSFor|BSFor","bSEnviSci|BSEnviSci"];
+    var optionArray = ["|","BAgriTech|BAgriTech","BAgriTech|DAgriTech","BSAgri|BSAgri","BSFor|BSFor","BSEnviSci|BSEnviSci"];
   } else if(s1.value == "College of Arts and Science"){
-    var optionArray = ["|","bSMath|BSMath","bSBior|BSBio","bAComm|BAComm","bAPsych|BAPsych","bAPubAdmin|BAPubAdmin"];
+    var optionArray = ["|","BSMath|BSMath","BSBior|BSBio","BAComm|BAComm","BAPsych|BAPsych","BAPubAdmin|BAPubAdmin"];
   } else if(s1.value == "College of Allied Medicine"){
-    var optionArray = ["|","bSNursing|BSNursing","bSMidwifery|BSMidwifery"];
+    var optionArray = ["|","BSNursing|BSNursing","BSMidwifery|BSMidwifery"];
   }
   else if(s1.value == "College of Business Administration"){
-    var optionArray = ["|","bSAcc|BSAcc","bSBA in Financ|BSBA in Finance","bSBA in Marketing|BSBA in Marketing","bSBA in HR|BSBA in HR"];
+    var optionArray = ["|","BSAcc|BSAcc","BSBA in Financ|BSBA in Finance","BSBA in Marketing|BSBA in Marketing","BSBA in HR|BSBA in HR"];
   }
 
   else if(s1.value == "College of Engineering"){
-    var optionArray = ["|","bSCE|BSCE","bSCpE|BSCpE","bSECE|BSECE","bSEE|BSEE","bSIE|BSIE","bSME|BSME"];
+    var optionArray = ["|","BSCE|BSCE","BSCpE|BSCpE","BSECE|BSECE","BSEE|BSEE","BSIE|BSIE","BSME|BSME"];
   }
 
   else if(s1.value == "College of Industrial Technology"){
-    var optionArray = ["|","bSCPT|BSCPT","bSELT|BSELT","bSELX|BSELX","bSFT|BSFT","bSMT|BSMT","bSHRM|BSHRM"];
+    var optionArray = ["|","BSCPT|BSCPT","BSELT|BSELT","BSELX|BSELX","BSFT|BSFT","BSMT|BSMT","BSHRM|BSHRM"];
   }
 
   else if(s1.value == "College of Teachers Education"){

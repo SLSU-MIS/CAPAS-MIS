@@ -7,6 +7,73 @@
     }
 ?>
 
+
+
+
+
+<!--ADD ASSIGNED DATA TO DATABASE-->
+
+
+          
+          <?php
+
+          define('DB_HOST', 'localhost'); 
+          define('DB_NAME', 'capas_db');
+          define('DB_USER','root');
+          define('DB_PASSWORD',''); 
+
+          $con=mysql_connect(DB_HOST,DB_USER,DB_PASSWORD) or die("Failed to connect to MySQL: " . mysql_error()); 
+          $db=mysql_select_db(DB_NAME,$con) or die("Failed to connect to MySQL: " . mysql_error());
+
+
+            if(isset($_POST)==true && empty($_POST)==false){
+
+                  $instructorid=$_POST['instructorlistid'];
+                  $instructorname=$_POST['instructorlistname'];
+                  $instructorcollege=$_POST['instructorlistcollege'];
+                  $instructordept=$_POST['instructorlistdept'];
+
+
+                  $deanid=$_POST['deanid'];
+                  $deanname=$_POST['deanname'];
+                  $deancollege=$_POST['deancollege'];
+                  $deandept=$_POST['deandept'];
+
+              foreach($instructorid as $a => $b){
+
+                $type="Dean Evaluation";
+
+               $sql = "INSERT INTO dean_evaluate(deaninstructor_id,dean_name,instructor_evaluatee,instructor_college,instructor_dept,type) 
+               VALUES('$deanid','$deanname', '$instructorname[$a]','$instructorcollege[$a]','$instructordept[$a]','$type')";
+               
+               $res=mysql_query($sql);
+                                     
+
+               
+                                        If($res)
+                                            {
+                                        $assignsuccess= "Assigning Dean Instructors to Instructor was Successul";
+                                        
+                                            }
+                                          Else
+                                          {
+                                        $assignerror= "Error Assigning Dean Instructors";
+                                        
+                                          }
+                   
+              
+
+
+            
+            }
+          }
+
+
+            ?>
+
+          <!--END ASSIGNMENT-->
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -147,6 +214,8 @@
         </li>
 
 
+
+
         
         <li class="treeview">
           <a href="#">
@@ -173,11 +242,11 @@
     <section class="content-header">
       <h1>
         ASSIGNMENT TAB
-        <small>(Student)</small>
+        <small>(Dean)</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Peer Assignment Tab</li>
+        <li class="active">Dean Assignment Tab</li>
       </ol>
     </section>
 
@@ -190,11 +259,11 @@
         <div class="col-lg-6 col-xs-6">
           <!-- small box -->
           <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class="fa fa-users"></i></span>
+            <span class="info-box-icon bg-green"><i class="fa fa-users"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Registered Dean Evaluators</span>
-              <span class="info-box-number">10</span>
+              <span class="info-box-text">Registered Instructor Evaluators</span>
+              <span class="info-box-number">1,410</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -228,6 +297,7 @@
                 <!-- /.box-header -->
                 <div class="box-body">
                   <table id="example1" class="table table-bordered table-striped">
+                    <form action="assigndean.php?college=<?php echo $_REQUEST['slct1']; ?>" method="POST">
                     <thead>
                     <tr>
                       <th>COLLEGE</th>
@@ -241,13 +311,13 @@
                       <th>
                       <select id="slct1" name="slct1" onchange="populate(this.id,'slct2')">
                         <option value=""></option>
-                            <option value="cag">College of Agriculture</option>
-                            <option value="cam">College of Allied Medicine</option>
-                            <option value="cas">College of Arts and Sciences</option>
-                            <option value="cba">College of Business Administration</option>
-                            <option value="cen">College of Engineering</option>
-                            <option value="cit">College of Industrial Technology</option>
-                            <option value="cte">College of Teachers Education</option>
+                            <option value="College of Agriculture">College of Agriculture</option>
+                            <option value="College of Allied Medicine">College of Allied Medicine</option>
+                            <option value="College of Arts and Sciences">College of Arts and Sciences</option>
+                            <option value="College of Business Administration">College of Business Administration</option>
+                            <option value="College of Engineering">College of Engineering</option>
+                            <option value="College of Industrial Technology">College of Industrial Technology</option>
+                            <option value="College of Teachers Education">College of Teachers Education</option>
                             
                       </select>
                       </th>
@@ -256,12 +326,15 @@
                             </th>
                             
                             <th>
-                                <a class="btn btn-success">Submit</a>
+                                 <input type="submit" name="submit" class="btn btn-success" value="SEARCH QUERY"/>
+                           
                             </th>
                         </tr>
                     </thead>
+                  
 
                     <tbody>
+                       </form>
                     </tbody>
                   </table>
                 </div>
@@ -274,6 +347,168 @@
 
               </div>
               <!-- /.box -->
+
+
+
+              <!--SEARCH RESULT-->
+
+        
+        <div class="row">
+          <!--STUDENT-->
+          <div class="col-md-6">
+            <div class="box box-primary box-solid">
+                 <div class="box-header with-border">
+                       <h3 class="box-title">SEARCHED INSTRUCTORS</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+
+               <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">INSTRUCTORS RESULTS</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-striped">
+                      <form action="assigndean.php" method="post">
+                        <thead>
+                          <th>Instructor ID</th>
+                          <th>Instructor Name</th>
+                          <th>College</th>
+                          <th>Dept</th>
+                        </thead>
+                      <tbody>
+                        </table>
+           <?php
+  
+                      mysql_connect("localhost","root");
+                      mysql_select_db("capas_db");
+                      $res=mysql_query("SELECT * FROM instructor_evaluator where ins_college= '".$_REQUEST['slct1']."' && ins_dept= '".$_REQUEST['slct2']."'");
+                      while($row=mysql_fetch_array($res))
+                      {
+                          ?>
+
+            
+                    <td><input type="text" name="instructorlistid[]" value="<?php echo $row['ins_id']; ?>"/></td>
+                    <td><input type="text" name="instructorlistname[]" value="<?php echo $row['ins_name']; ?>"/></td>
+                    <td><input type="text" name="instructorlistcollege[]" value="<?php echo $row['ins_college']; ?>"/></td>
+                     <td><input type="text" name="instructorlistdept[]" value="<?php echo $row['ins_dept']; ?>"/></td>
+                    
+                          <?php
+                      }
+                      ?>
+                    
+                  
+
+
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+
+                </div>
+                <!-- /.box-body -->
+
+              </div>
+              <!-- /.box -->
+          </div>
+              <!--END STUDENT-->
+
+               <!--STUDENT-->
+          <div class="col-md-6">
+            <div class="box box-primary box-solid">
+                 <div class="box-header with-border">
+                       <h3 class="box-title">SEARCHED DEAN</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+
+               <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Dean RESULTS</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                  <table class="table table-bordered table-striped">
+                      <form action="assignpeer.php" method="post">
+                        <thead>
+                          <th>Instructor ID</th>
+                          <th>Instructor Name</th>
+                          <th>College</th>
+                          <th>Dept</th>
+                        </thead>
+                      <tbody>
+                        
+
+           <?php
+
+
+  
+                      mysql_connect("localhost","root");
+                      mysql_select_db("capas_db");
+                      $res=mysql_query("SELECT * FROM instructor_evaluator where ins_college= '".$_REQUEST['slct1']."' && ins_dept= '".$_REQUEST['slct2']."' && dean= 'Yes'");
+                      while($row=mysql_fetch_array($res))
+                      {
+                          ?>
+                    <div class="form-group">
+                    <tr>
+                     <td><input type="text" name="deanid" value="<?php echo $row['ins_id']; ?>"/></td>
+                    <td><input type="text" name="deanname" value="<?php echo $row['ins_name']; ?>"/></td>
+                    <td><input type="text" name="deancollege" value="<?php echo $row['ins_college']; ?>"/></td>
+                     <td><input type="text" name="deandept" value="<?php echo $row['ins_dept']; ?>"/></td>
+                    
+                    
+                    </div>
+                    </tr>
+
+
+
+                          <?php
+                      }
+
+
+                      ?>
+
+                      </tbody>
+                      </table>
+                      <hr>
+                      <?php echo '<input type="submit" name="submit2" class="btn btn-success btn-lg" value="Assign"/>';?>
+                  </form>
+
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+
+                </div>
+                <!-- /.box-body -->
+
+              </div>
+              <!-- /.box -->
+          </div>
+              <!--END INSTRUCTOR-->
+
+        </div>
+
+          <!--END SEARCH RESULT-->
+
+          <?php if (isset($assignsuccess)) {echo "<div class=\"alert alert-success\"><strong>Note: </strong>" .$assignsuccess. "</div>"; }?>
+          <?php if (isset($assignerror)) {echo "<div class=\"alert alert-danger\"><strong>Note: </strong>" .$assignerror. "</div>"; }?>
+
+          
                
 
 
@@ -283,6 +518,8 @@
         <!-- right col -->
       </div>
       <!-- /.row (main row) -->
+
+
 
     </section>
     <!-- /.content -->
@@ -320,31 +557,32 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 
 
+
 <script>
 function populate(s1,s2){
   var s1 = document.getElementById(s1);
   var s2 = document.getElementById(s2);
   s2.innerHTML = "";
-  if(s1.value == "cag"){
+  if(s1.value == "College of Agriculture"){
     var optionArray = ["|","bAgriTech|BAgriTech","dAgriTech|DAgriTech","bSAgri|BSAgri","bSFor|BSFor"];
-  } else if(s1.value == "cas"){
+  } else if(s1.value == "College of Arts and Sciences"){
     var optionArray = ["|","bSMath|BSMath","bSBio|BSBio","bAComm|BAComm","bAPsych|BAPsych","bAPubAdmin|BAPubAdmin"];
-  } else if(s1.value == "cam"){
+  } else if(s1.value == "College of Allied Medicine"){
     var optionArray = ["|","bSNursing|BSNursing","bSMidwifery|BSMidwifery"];
   }
-  else if(s1.value == "cba"){
+  else if(s1.value == "College of Business Administration"){
     var optionArray = ["|","bSAcc|BSAcc","bSBA in Finance|BSBA in Finance","bSBA in Marketing|BSBA in Marketing","bSBA in HR|BSBA in HR","bS in HRM|BS in HRM"];
   }
 
-  else if(s1.value == "cen"){
+  else if(s1.value == "College of Engineering"){
     var optionArray = ["|","bSCpE|BSCpE","bSCE|BSCE","bSECE|BSECE","bSEE|BSEE","bSIE|BSIE","bSME|BSME"];
   }
 
-  else if(s1.value == "cit"){
+  else if(s1.value == "College of Industrial Technology"){
     var optionArray = ["|","bSCPT|BSCPT","bSELT|BSELT","bSELX|BSELX","bSFT|BSFT","bSMT|BSMT"];
   }
 
-  else if(s1.value == "cte"){
+  else if(s1.value == "College of Teachers Education"){
     var optionArray = ["|","bEED|BEED","bSEDinEnglish|BSEDinEnglish","bSEDinFilipino|BSEDinFilipino","bSEDinMath|BSEDinMath","bSEDinSocial|BSEDinSocial","bSEDinMapeh|BSEDinMapeh","bSEDinTLE|BSEDinTLE","iHK|IHK","bSEDinPhysics|BSEDinPhysics"];
   }
   for(var option in optionArray){
