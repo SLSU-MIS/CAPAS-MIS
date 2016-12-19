@@ -36,7 +36,7 @@ if (mysqli_connect_errno()) {
         $insid = $_SESSION['user'];
         $evaluated = "0";
 
-        $query1 = "SELECT * FROM dean_evaluate WHERE deaninstructor_id = '".$insid."' AND evaluated = '".$evaluated."' ";
+        $query1 = "SELECT * FROM instructor_evaluator WHERE ins_id = '".$insid."' AND evaluated = '".$evaluated."' ";
 
         $result1 = $db->query($query1);
         $numresults1 = $result1->num_rows;
@@ -51,8 +51,6 @@ if (mysqli_connect_errno()) {
         $instructordone = $_REQUEST['professor'];
         $collegedone = $_REQUEST['ins_college'];
         $deptdone = $_REQUEST['ins_dept'];
-       
-
 
         if($numresults1==""){
 
@@ -179,8 +177,7 @@ if (mysqli_connect_errno()) {
         <div class="pull-left info">
           <p><?php echo $fname;?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> 
-
-             <?php
+            <?php
             if($dean=="Yes"){
              
              echo "Welcome Dean!";
@@ -191,8 +188,6 @@ if (mysqli_connect_errno()) {
             }
 
             ?>
-
-
           </a>
         </div>
       </div>
@@ -238,6 +233,7 @@ if (mysqli_connect_errno()) {
       <h1>
         <a href="instructor.php" class="btn btn-success">Self Evaluation</a>
         <a href="peer.php" class="btn btn-primary">Peer Evaluation</a>
+
         <?php
           if($dean=="Yes"){
 
@@ -262,7 +258,7 @@ if (mysqli_connect_errno()) {
       <div class="row">
         <!-- Left col -->
         <section class="col-lg-12 connectedSortable">
-         <h3>PEER EVALUATION PAGE</h3>
+         <h3>SELF EVALUATION PAGE</h3>
         </section>
       </div>
 
@@ -319,8 +315,9 @@ if (mysqli_connect_errno()) {
       <hr>
       <?php if (isset($noted)) {echo "<div class=\"alert alert-danger\"><strong><i class=\"fa fa-info-circle fa-2x\" aria-hidden=\"true\"></i>Note: </strong>" .$noted. "</div>"; }?>
       <?php if (isset($done)) {echo "<div class=\"alert alert-danger\"><strong><i class=\"fa fa-info-circle fa-2x\" aria-hidden=\"true\"></i>Note: </strong>" .$done. "</div>"; }?>
+
           
-   <form action="deanverify.php" method="post">
+   <form action="selfverify.php" method="post">
 
       <!--EVALUATION OPTION-->
 
@@ -335,7 +332,7 @@ if (mysqli_connect_errno()) {
                         if ($numresults1 !=0) {
                           for ($i=0; $i < $numresults1; $i++) { 
                             $row = $result1->fetch_assoc();
-                            echo"<option value=\"".$row['instructor_evaluatee']."\">".$row['instructor_evaluatee']."</option>";
+                            echo"<option value=\"".$row['ins_name']."\">".$row['ins_name']."</option>";
                           }
                         }
                         else {
@@ -357,7 +354,7 @@ if (mysqli_connect_errno()) {
                         if ($numresults2 !=0) {
                           for ($i=0; $i < $numresults2; $i++) { 
                             $row = $result2->fetch_assoc();
-                            echo"<option value=\"".$row['instructor_college']."\">".$row['instructor_college']."</option>";
+                            echo"<option value=\"".$row['ins_college']."\">".$row['ins_college']."</option>";
                           }
                         }
                         else {
@@ -379,7 +376,7 @@ if (mysqli_connect_errno()) {
                         if ($numresults3 !=0) {
                           for ($i=0; $i < $numresults3; $i++) { 
                             $row = $result3->fetch_assoc();
-                            echo"<option value=\"".$row['instructor_dept']."\">".$row['instructor_dept']."</option>";
+                            echo"<option value=\"".$row['ins_dept']."\">".$row['ins_dept']."</option>";
                           }
                         }
                         else {

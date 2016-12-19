@@ -11,19 +11,17 @@ if(@$_POST['login']){
     $password = @$_POST['password'];
 
 
-    $sql = "SELECT student_id, student_pass, student_name,student_college, student_dept, student_year 
-    from student_evaluator WHERE student_id='$username' AND activate='0' LIMIT 1";
+    $sql = "SELECT * from instructor_evaluator WHERE ins_id='$username' AND activate='0' LIMIT 1";
     $query = mysqli_query($conn, $sql);
 
     if ($query) {
         $row = mysqli_fetch_array($query, MYSQLI_NUM);
-        $user = $row[0];
-        $pwd =  $row[1];
-        $fname = $row[2];
-        $lname = $row[3];
-        $college = $row[4];
-        $course = $row[5];
-        $year = $row[6];
+        $user = $row[0];   
+        $fname = $row[1];
+        $college = $row[2];
+        $department = $row[3];
+        $pwd =  $row[4];
+        $dean=$row[10];
         /*echo $user;
         echo $pwd;
         echo $fname;
@@ -32,7 +30,7 @@ if(@$_POST['login']){
         echo $course;
         echo $year;*/
     }
-    $sql = "SELECT activate from student_evaluator WHERE student_id='$username'";
+    $sql = "SELECT activate from instructor_evaluator WHERE ins_id='$username'";
     $query = mysqli_query($conn, $sql);
 
     if ($query) {
@@ -42,28 +40,31 @@ if(@$_POST['login']){
             if($active == '1'){
                 $note= "You already took the Evaluation for this semester";
             }
+
+            else{
+             $note2 = "WRONG USERNAME OR PASSWORD,TRY AGAIN!";
+
+        }
     }
 
     if($username == $user && $password == $pwd){
-        $_SESSION['student_id'] = $user;
-        $_SESSION['student_name'] = $fname;
-        $_SESSION['student_college'] = $college;
-        $_SESSION['student_dept'] = $course;
-        $_SESSION['student_year'] = $year;
+
+        $_SESSION['user'] = $user;
+        $_SESSION['ins_name'] = $fname;
+        $_SESSION['ins_college'] = $college;
+        $_SESSION['ins_dept'] = $department;
+        $_SESSION['dean'] = $dean;
 
         /**$sql= "UPDATE student SET activate='1' WHERE stud_id='$user'";
         $query=mysqli_query($conn, $sql);**/
         
 
        
-        header('Location: EvaluationPage/profile.php');
+        header('Location: EvaluationPage/instructor.php');
 
     }
 
-        else{
-             $note2 = "WRONG USERNAME OR PASSWORD,TRY AGAIN!";
-
-        }
+        
 }
 
 
@@ -128,8 +129,8 @@ if(@$_POST['login']){
                     </div>
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-3 form-box">
-                            <?php if (isset($note)) {echo "<div class=\"alert alert-danger\"><strong>Note: </strong>" .$note. "</div>"; }?>
-                            <?php if (isset($note2)) {echo "<div class=\"alert alert-danger\"><strong>Note: </strong>" .$note2. "</div>"; }?>
+                            <?php if (isset($note)) {echo "<div class=\"alert alert-danger\"><i class=\"fa fa-user-times fa-2x\" aria-hidden=\"true\"></i><strong>Note: </strong>" .$note. "</div>"; }?>
+                            <?php if (isset($note2)) {echo "<div class=\"alert alert-danger\"><i class=\"fa fa-exclamation-triangle fa-3x\" aria-hidden=\"true\"></i><strong>Note: </strong>" .$note2. "</div>"; }?>
                         	<div class="form-top">
                         		<div class="form-top-left">
                         			<h3>Student Credentials:</h3>

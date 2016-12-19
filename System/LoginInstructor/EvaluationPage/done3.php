@@ -1,3 +1,34 @@
+<?php
+  error_reporting(0);
+  session_start();
+  
+  @ $db = mysqli_connect('127.0.0.1', 'root', '', 'capas_db');
+
+if (mysqli_connect_errno()) {
+  echo "failed to connect to database";
+  exit;
+}
+
+
+
+
+    if(isset($_SESSION['user'])){
+      $userId = $_SESSION['user'];
+      $fname = $_SESSION['ins_name'];
+      $college = $_SESSION['ins_college'];
+      $department = $_SESSION['ins_dept'];
+      $dean = $_SESSION['dean'];
+
+      $sem= "sem_01";
+      $SY = "2016-2017";
+      $RP = "August-December";
+      $prof = @$_POST['professor'];
+      $_SESSION['prof-name']=$prof;
+      $subj=$_POST['subject'];
+      $_SESSION['subj']=$subj;
+
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,7 +105,7 @@
                 <img src="dist/img/slsulogo.png" class="img-circle" alt="User Image">
 
                 <p>
-                  CAPAS-ADMINISTRATOR
+                 <?php echo $fname;?>
                   <small>Revision May 2016</small>
                 </p>
               </li>
@@ -104,8 +135,22 @@
           <img src="dist/img/slsulogo.png" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>CAPAS-ADMINISTRATOR</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Active</a>
+          <p><?php echo $fname;?></p>
+          <a href="#"><i class="fa fa-circle text-success"></i> 
+             <?php
+            if($dean=="Yes"){
+             
+             echo "Welcome Dean!";
+
+           }
+            else{
+              echo "Welcome Instructor!";
+            }
+
+            ?>
+
+
+          </a>
         </div>
       </div>
       <!-- search form -->
@@ -124,7 +169,7 @@
       <ul class="sidebar-menu">
         <li class="header">MANAGEMENT TABS</li>
         <li class="active treeview">
-          <a href="profile.php">
+          <a href="index.php">
             <i class="fa fa-dashboard"></i> <span>Profile Information</span>
           </a>
           
@@ -133,15 +178,9 @@
         
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-edit"></i> <span>EVALUATE AS:</span>
-            <i class="fa fa-angle-left pull-right"></i>
-            <span class="label label-primary pull-right">3</span>
+            <i class="fa fa-edit"></i> <span>EVALUATE</span>
           </a>
-          <ul class="treeview-menu">
-            <li><a href="self.php"><i class="fa fa-circle-o"></i>SELF</a></li>
-            <li><a href="peer.php"><i class="fa fa-circle-o"></i>PEER</a></li>
-            <li><a href="dean.php"><i class="fa fa-circle-o"></i>DEAN</a></li>
-          </ul>
+          
         </li>
         
       </ul>
@@ -154,8 +193,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Instructor Profile
-        <small></small>
+        Dean Evaluation
+        <small>(Fill-up Forms)</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -170,22 +209,32 @@
       <div class="row">
         <!-- Left col -->
         <section class="col-lg-12 connectedSortable">
-         <h3 align="center">FACULTY PROFILE</h3>
+         <h3>EVALUATION PAGE</h3>
         </section>
       </div>
 
-      <!--PAGE PROFILE-->
-      <div class="row">
+      <!--EVALUATION PAGE-->
 
-    
+      <div class="jumbotron alert-success" align="center">
+              <h3><i class="fa fa-check-circle-o fa-3x" aria-hidden="true"></i>SUCCESSFULLY EVALUATED!</h3>
+            </div>
+            <h3 align="center">Would you like to Evaluate another Professor ? </h3>
+            <p align="center">If No, it will be logout automatically</p>
+   
+      <div class="link-wrapper" align="center">
+
+          <button><a class="btn btn-success" href="peer.php"><i class="fa fa-check fa-lg" aria-hidden="true"></i>Yes</a></button>
+
+          <button><a class="btn btn-danger" href="logout.php"><i class="fa fa-times fa-lg" aria-hidden="true"></i>No</a></button>
 
       </div>
-    <!--END OF SECTION-->
-    </section>
+      
 
-    <!-- /.content -->
-  </div>
+   </div>
+
+  
   <!-- /.content-wrapper -->
+
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
       <b>Version</b> 1.0.0
