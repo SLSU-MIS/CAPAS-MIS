@@ -7,6 +7,24 @@
     }
 ?>
 
+<?php
+              error_reporting(0);
+              $con = mysql_connect("localhost","root","");
+              if (!$con) {
+                die('Could not connect: ' . mysql_error());
+              }
+
+              mysql_select_db("capas_db", $con);
+
+              $result = mysql_query("select count(1) FROM student_evaluator");
+              $row = mysql_fetch_array($result);
+
+              $total = $row[0];
+              $number2= $total;
+
+              mysql_close($con);
+          ?>
+
 
 
 
@@ -272,7 +290,7 @@
 
             <div class="info-box-content">
               <span class="info-box-text">Registered Student Evaluators</span>
-              <span class="info-box-number">1,410</span>
+              <span class="info-box-number"><?php echo $number2; ?></span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -600,6 +618,15 @@
   //                ang mga nagtetake.
     ["MAT01c", "College of Agriculture1"],
     ["MAT10b", "BSCpE3"],
+    ["CVE15 L", "BSCE3"],
+    ["CPE000", "BSCpE3"],
+    ["CPE301", "BSCpE3"],
+    ["CPE303", "BSCpE3"],
+    ["CPE311", "BSCpE3"],
+    ["ELE01", "BSCpE3"],
+    ["ECE01", "BSCpE3"],
+    ["MAT10B", "BSCpE3"],
+    ["MEC01", "BSCpE3"],
     ["CPE302", "CPE3,IE5"]
   ];
 
@@ -702,14 +729,14 @@
     "BSCpE": {
       1:["A", "B"],
       2:["A", "B"],
-      3:["A", "B"],
+      3:["GC", "GD"],
       4:["A", "B"],
       5:["A", "B"]
     },
     "BSCE": {
       1:["A", "B"],
       2:["A", "B"],
-      3:["A", "B"],
+      3:["GC", "GD"],
       4:["A", "B"],
       5:["A", "B"]
     },

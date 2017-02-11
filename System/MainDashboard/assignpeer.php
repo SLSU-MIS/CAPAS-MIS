@@ -7,6 +7,24 @@
     }
 ?>
 
+<?php
+              error_reporting(0);
+              $con = mysql_connect("localhost","root","");
+              if (!$con) {
+                die('Could not connect: ' . mysql_error());
+              }
+
+              mysql_select_db("capas_db", $con);
+
+              $result = mysql_query("select count(1) FROM instructor_evaluator");
+              $row = mysql_fetch_array($result);
+
+              $total = $row[0];
+              $number2= $total;
+
+              mysql_close($con);
+          ?>
+
 
 
 
@@ -263,7 +281,7 @@
 
             <div class="info-box-content">
               <span class="info-box-text">Registered Instructor Evaluators</span>
-              <span class="info-box-number">1,410</span>
+              <span class="info-box-number"><?php echo $number2; ?></span>
             </div>
             <!-- /.info-box-content -->
           </div>

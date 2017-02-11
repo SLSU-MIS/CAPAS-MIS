@@ -35,8 +35,9 @@ if (mysqli_connect_errno()) {
         }
         $insid = $_SESSION['user'];
         $evaluated = "0";
+        $evaltype="Peer Evaluation";
 
-        $query1 = "SELECT * FROM instructor_evaluate WHERE instructor_id = '".$insid."' AND evaluated = '".$evaluated."' ";
+        $query1 = "SELECT * FROM instructor_evaluate WHERE instructor_college = '".$college."' AND instructor_dept = '".$department."' AND evaluated = '".$evaluated."' AND type = '".$evaltype."' ";
 
         $result1 = $db->query($query1);
         $numresults1 = $result1->num_rows;

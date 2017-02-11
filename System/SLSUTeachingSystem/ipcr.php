@@ -3,6 +3,7 @@
     error_reporting(0);
     session_start();
     $name = $_SESSION['sess_name'];
+    $college = $_SESSION['sess_college'];
     if(!isset($_SESSION['sess_sess_username'])){
       header('Location: index.php?err=2');
     }
@@ -12,7 +13,7 @@
 
 
           define('DB_HOST', 'localhost'); 
-          define('DB_NAME', 'ipcr_db');
+          define('DB_NAME', 'capas_ipcrdb');
           define('DB_USER','root');
           define('DB_PASSWORD',''); 
 
@@ -24,37 +25,42 @@
 error_reporting(0); 
 
 If(isset($_REQUEST['submit'])!=''){
+
+                   $index=$_REQUEST['ind'];
+                   $res3=1; 
                     
                     $sql="insert into statement(name,unit,period1,period2) values
                     ('".$_REQUEST['name']."','".$_REQUEST['unit']."','".$_REQUEST['period1']."','".$_REQUEST['period2']."')";
-
-
+                    
+                    $res=mysql_query($sql);
+                    
                      $sql2="insert into review(name,reviewed_by,reviewed_date,approved_by,approved_date) values
                     ('".$_REQUEST['name']."','".$_REQUEST['review']."','".$_REQUEST['review_date']."','".$_REQUEST['approve']."','".$_REQUEST['approve_date']."')";
+                    
+                    $res2=mysql_query($sql2);
+                    
+                    for ($i = 0; $i < $index; $i++) {
 
+                      $Q=$_REQUEST['q'.$i];
+                      $E=$_REQUEST['e'.$i];
+                      $T=$_REQUEST['t'.$i];
+                      $aveg=($Q+$E+$T)/3;
+                      $ave=round($aveg,2);
 
-                    $sql3="insert into functions(strategic_no,name,success_indicator,actual,Q,E,T,A,remarks) values
-                    ('".$_REQUEST['strategic_no']."','".$_REQUEST['name']."','".$_REQUEST['success_indicator']."','".$_REQUEST['actual']."','".$_REQUEST['q']."','".$_REQUEST['e']."','".$_REQUEST['t']."','".$_REQUEST['a']."','".$_REQUEST['remarks']."')";
-
+                      $sql3="insert into functions(strategic_no,name,subject,success_indicator,actual,Q,E,T,A,remarks) values
+                      (".$_REQUEST['strategic_no'.$i].",\"".$_REQUEST['name']."\",\"".$_REQUEST['subject'.$i]."\",\"".$_REQUEST['success_indicator'.$i]."\",\"".$_REQUEST['actual'.$i]."\",\"".$_REQUEST['q'.$i]."\",\"".$_REQUEST['e'.$i]."\",\"".$_REQUEST['t'.$i]."\",$ave,\"".$_REQUEST['remarks'.$i]."\");";
+                      //var_dump($sql3);
+                      $res3=mysql_query($sql3);
+                      //var_dump($res3);
+                      //var_dump(mysql_error());
+                      if (!$res3)
+                        break;
+                    }
                   
                     $sql4="insert into approval(name,discussed,discussed_date,assesed,assesed_date,final,final_date) values
                     ('".$_REQUEST['name']."','".$_REQUEST['discuss']."','".$_REQUEST['discuss_date']."','".$_REQUEST['asses']."','".$_REQUEST['asses_date']."','".$_REQUEST['final']."','".$_REQUEST['final_date']."')";
                         
-
-                    $res=mysql_query($sql);
-
-                    $res2=mysql_query($sql2);
-
-                    $res3=mysql_query($sql3);
-
                     $res4=mysql_query($sql4);
-                    
-
-                       
-                    
-                   
-
-    
 
                     If($res)
                         {
@@ -77,11 +83,11 @@ If(isset($_REQUEST['submit'])!=''){
 
                        If($res3)
                         {
-                    $note= "Adding Functions was Successful";
+                    $note= "Adding Functions was Successful ".$res3;
                         }
                       Else
                       {
-                        $alert= "Error in Adding Functions Information";
+                        $alert= "Error in Adding Functions Information".$res3;;
                       }
 
 
@@ -94,17 +100,7 @@ If(isset($_REQUEST['submit'])!=''){
                         $alert= "Error in Adding Approval Information";
                       }
 
-                      
-
-
-
-
-                       
-
-
-
-
-                     
+                   
 
 }
 
@@ -302,15 +298,15 @@ body {
                                                   </div>
                                                 <div class="panel-body">
                                                     <div class="table-responsive">
-                                                          <p>I <input type="text" name="name" required="required"/> of the <input type="text" name="unit"  required="required"/> Section/Unit/Department
+                                                          <p>I <input type="text" name="name"  value="<?php echo $name; ?>"/> of the <input type="text" name="unit" value="<?php echo $college; ?>"/> Section/Unit/Department
                                                             commit to deliver and agree to be rated on the attainment of the following targets
                                                             in accordance with the indicated measures for the period of <input type='date' title="Period" 
                                                                       data-placement="top" data-toggle="popover" data-trigger="focus" data-content="Please do complete the right information"
-                                                                      required="required" name="period1" /> to
+                                                                      name="period1" /> to
                                                           
                                                           <input type='date'  title="Period" 
                                                                       data-placement="top" data-toggle="popover" data-trigger="focus" data-content="Please do complete the right information"
-                                                                      required="required"name="period2" /></p>
+                                                                      name="period2" /></p>
                                                            <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Next</button>
                                                     </div>
                                                 </div>
@@ -343,7 +339,8 @@ body {
                                                                        
                                                                     </th>
                                                                     <td>
-                                                                         <input type="text" name="review" class="form-control"/>
+                                                                         <input type="text" name="review" class="form-control"  data-placement="top" data-toggle="popover" data-trigger="focus" data-content="Please do complete the right information"
+                                                                      />
                                                                           Immediate Supervisor
                                                                     </td>
 
@@ -361,7 +358,7 @@ body {
                                                                  <tr>
                                                                     <th>Approved By:</th>
                                                                     <td>
-                                                                        <input type="text" name="approve" placeholder="Enter the Name" class="form-control" title="University President" 
+                                                                        <input type="text" name="approve" value="Dr. Milo O. Placino" class="form-control" title="University President" 
                                                                     data-placement="top" data-toggle="popover" data-trigger="focus" data-content="Must be a Character"/>
                                                                      University President
                                                                    
@@ -407,9 +404,10 @@ body {
                                             
                                             <div class="panel-body">
                                                 <div class="table-responsive">
-                                                    <table class="table table-striped table-bordered table-hover">
+                                                    <table class="table table-bordered">
                                                   <tr>
-                                                            <th>Output</th>
+                                                           
+                                                            <th colspan="2" style="text-align: center">Output</th>
                                                             <th>Success Indicator</th>
                                                             <th>Actual Accomplishment</th>
                                                             <th colspan="4" style="text-align: center">Rating
@@ -419,162 +417,79 @@ body {
 
                                                           </tr>
                                                           <tr>
-                                                              <th>STRATEGIC PRIORITY NO:<input type="text" name="strategic_no"/></th>
-                                                              <th colspan="2"></th>
+                                                                    <td>Strategic Priority No:</td>
+                                                                    <td>Subject</td>
+                                                                    <td></td>
+                                                                    <td></td>
                                                                     <td>Q</td>
                                                                     <td>E</td>
                                                                     <td>T</td>
                                                                     <td>A</td>
-                                                          </tr>
-                                                          <tr>
-                                                              <td ></td>
-                                                              <td><input type="text" name="success_indicator"/></td>
-                                                              <td><input type="text" name="actual"/></td>
-                                                                    <td>
-                                                                        <select name="q">
-                                                                          <option>1</option>
-                                                                          <option>2</option>
-                                                                          <option>3</option>
-                                                                          <option>4</option>
-                                                                          <option>5</option>
-
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                         <select name="e">
-                                                                          <option>1</option>
-                                                                          <option>2</option>
-                                                                          <option>3</option>
-                                                                          <option>4</option>
-                                                                          <option>5</option>
-
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                         <select name="t">
-                                                                          <option>1</option>
-                                                                          <option>2</option>
-                                                                          <option>3</option>
-                                                                          <option>4</option>
-                                                                          <option>5</option>
-
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                           <select name="a">
-                                                                          <option>1</option>
-                                                                          <option>2</option>
-                                                                          <option>3</option>
-                                                                          <option>4</option>
-                                                                          <option>5</option>
-
-                                                                        </select>
-                                                                    </td>
-                                                              <td><input type="text" name="remarks"/></td>
-
+                                                                    <td></td>
                                                           </tr>
 
-                                                           <tr>
-                                                              <td ></td>
-                                                              <td><input type="text"/></td>
-                                                              <td><input type="text"/></td>
-                                                                    <td>
-                                                                        <select>
-                                                                          <option>1</option>
-                                                                          <option>2</option>
-                                                                          <option>3</option>
-                                                                          <option>4</option>
-                                                                          <option>5</option>
+                                                          <?php
+                                                                      $ind  = 0;
+                                                                      mysql_connect("localhost","root");
+                                                                      mysql_select_db("capas_tpdb");
+                                                                      $res=mysql_query("SELECT * FROM teaching_load WHERE name='".$_SESSION['sess_name']."'");
+                                                                      while($row=mysql_fetch_array($res))
+                                                                      {
 
+                                                                          ?>
+                                                                  <tr>
+                                                                  
+                                                                    <td><input class="form-control" type="number" <?php echo "name='strategic_no".$ind."'"; ?> id="myText" data-placement="top" data-toggle="popover" data-trigger="focus" data-content="Only Numbers Were Accepted"
+                                                                    /></td>
+                                                                    <td><input class="form-control" type="text" <?php echo "name='subject".$ind."'"; ?> value="<?php echo $row['subject'];?>"></td>
+                                                                    <td><input class="form-control" type="text" <?php echo "name='success_indicator".$ind."'"; ?> value="<?php echo $row['class_size'];?>"></td>
+                                                                    <td><input class="form-control" type="number" <?php echo "name='actual".$ind."'"; ?> id="myText" data-placement="top" data-toggle="popover" data-trigger="focus" data-content="Only Numbers Were Accepted"
+                                                                    /></td>
+                                                                    <td>
+                                                                       <select class="select-value" placeholder="Value 1" <?php echo "name='q".$ind."'"; ?> >
+                                                                        <option value=1>1</option>
+                                                                        <option value=2>2</option>
+                                                                        <option value=3>3</option> 
+                                                                        <option value=4>4</option>
+                                                                         <option value=5>5</option>
+                                                                      </select>
+                                                                    </td>
+                                                                    <td>
+                                                                         <select class="select-value" placeholder="Value 2" <?php echo "name='e".$ind."'"; ?> >
+                                                                          <option value=1>1</option>
+                                                                        <option value=2>2</option>
+                                                                        <option value=3>3</option>
+                                                                        <option value=4>4</option>
+                                                                         <option value=5>5</option>
                                                                         </select>
                                                                     </td>
                                                                     <td>
-                                                                         <select>
-                                                                          <option>1</option>
-                                                                          <option>2</option>
-                                                                          <option>3</option>
-                                                                          <option>4</option>
-                                                                          <option>5</option>
-
-                                                                        </select>
+                                                                         <select class="select-value" placeholder="Value 3" <?php echo "name='t".$ind."'"; ?> >
+                                                                             <option value=1>1</option>
+                                                                        <option value=2>2</option>
+                                                                        <option value=3>3</option>
+                                                                        <option value=4>4</option>
+                                                                         <option value=5>5</option>
+                                                                          </select> 
                                                                     </td>
-                                                                    <td>
-                                                                         <select>
-                                                                          <option>1</option>
-                                                                          <option>2</option>
-                                                                          <option>3</option>
-                                                                          <option>4</option>
-                                                                          <option>5</option>
-
-                                                                        </select>
+                                                                    <td class="td-output">
+                                                                     <input type="number" placeholder="Average" class="input-average" <?php echo "name='average".$ind."'"; ?> />
                                                                     </td>
-                                                                    <td>
-                                                                           <select>
-                                                                          <option>1</option>
-                                                                          <option>2</option>
-                                                                          <option>3</option>
-                                                                          <option>4</option>
-                                                                          <option>5</option>
+                                                                    <td><input type="text" <?php echo "name='remarks".$ind."'"; ?> class="form-control"/></td>
+                                                                    
+                                                                 
+                                                                   <?php
+                                                                    $ind++;
+                                                                    }
+                                                                    ?>
+                                                        <input type='hidden' name="ind" <?php echo "value=".$ind ?> />
 
-                                                                        </select>
-                                                                    </td>
-                                                              <td><input type="text"/></td>
-
-                                                          </tr>
-
-                                                           <tr>
-                                                              <td ></td>
-                                                              <td><input type="text"/></td>
-                                                              <td><input type="text"/></td>
-                                                                    <td>
-                                                                        <select>
-                                                                          <option>1</option>
-                                                                          <option>2</option>
-                                                                          <option>3</option>
-                                                                          <option>4</option>
-                                                                          <option>5</option>
-
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                         <select>
-                                                                          <option>1</option>
-                                                                          <option>2</option>
-                                                                          <option>3</option>
-                                                                          <option>4</option>
-                                                                          <option>5</option>
-
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                         <select>
-                                                                          <option>1</option>
-                                                                          <option>2</option>
-                                                                          <option>3</option>
-                                                                          <option>4</option>
-                                                                          <option>5</option>
-
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                           <select>
-                                                                          <option>1</option>
-                                                                          <option>2</option>
-                                                                          <option>3</option>
-                                                                          <option>4</option>
-                                                                          <option>5</option>
-
-                                                                        </select>
-                                                                    </td>
-                                                              <td><input type="text"/></td>
-
-                                                          </tr>
                                                         </table>
 
                                                        
                                                     
                                                     
-                                                    
+                                               
                                                 </div>
                                                  <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Next</button>
                                                
@@ -610,9 +525,9 @@ body {
                                                                     Discussed With:
                                                                 </th>
                                                                 <td>
-                                                                    <input type="text" class="form-control" title="Contact Hours Per Week" 
+                                                                    <input type="text" class="form-control" title="Discussed With" 
                                                                     data-placement="top" data-toggle="popover" data-trigger="focus" data-content="Please do complete the right information"
-                                                                    required="required" name="discuss"/>
+                                                                    name="discuss" value="<?php echo $name; ?>"/>
                                                                 </td>
 
                                                                  <th>
@@ -621,7 +536,7 @@ body {
                                                                 <td>
                                                                     <input type='date' class="form-control" title="Date of Discussion" 
                                                                       data-placement="top" data-toggle="popover" data-trigger="focus" data-content="Please do complete the right information"
-                                                                       name="discuss_date"/>
+                                                                       name="discuss_date" />
                                                                 </td>
                                                             </tr>
                                                                 <tr>
@@ -629,9 +544,9 @@ body {
                                                                       Assesed By:
                                                                   </th>
                                                                   <td>
-                                                                      <input type="text" class="form-control" title="Unit Per Week" 
+                                                                      <input type="text" class="form-control" title="Assesed By" 
                                                                       data-placement="top" data-toggle="popover" data-trigger="focus" data-content="Please do complete the right information"
-                                                                      required="required" name="asses"/>
+                                                                      name="asses"/>
                                                                   </td>
 
                                                                   <th>
@@ -641,7 +556,7 @@ body {
                                                                   <td>
                                                                    <input type='date' class="form-control" title="Date of Assesesment" 
                                                                       data-placement="top" data-toggle="popover" data-trigger="focus" data-content="Please do complete the right information"
-                                                                       name="asses_date"/>
+                                                                       name="asses_date" />
                                                                   </td>
                                                                 </tr>
                                                                 <tr>
@@ -651,7 +566,7 @@ body {
                                                                 <td>
                                                                     <input type="text" class="form-control" title="Final Rating" 
                                                                     data-placement="top" data-toggle="popover" data-trigger="focus" data-content="Please do complete the right information"
-                                                                    required="required" name="final"/>
+                                                                    name="final" value="Dr. Milo O. Placino"/>
                                                                 </td>
                                                                 <th>
                                                                     Date:
@@ -660,7 +575,7 @@ body {
                                                                 <td>
                                                                     <input type='date' class="form-control" title="Date of Rating" 
                                                                       data-placement="top" data-toggle="popover" data-trigger="focus" data-content="Please do complete the right information"
-                                                                       name="final_date"/>
+                                                                       name="final_date" />
                                                                 </td>
 
                                                               </tr>
@@ -708,6 +623,32 @@ body {
     <script src="assets/js/jquery.metisMenu.js"></script>
        <!-- CUSTOM SCRIPTS -->
     <script src="assets/js/custom.js"></script>
+
+
+    <script>
+
+      $(window).ready(function() {
+        getSelectValueAverage();
+        $(".select-value").change(function() {
+          getSelectValueAverage(this);
+        });
+      });
+
+      function getSelectValueAverage(outputTb) {
+        var sum = 0, length = 0;
+        $(outputTb).parent().parent().find(".select-value").each(function() {
+          sum += parseFloat($(this).val());
+          length++;
+        });
+        // Round of two the nearest hundredths
+        var result = Math.round(sum/length *100) / 100;
+        var inputAve = $(outputTb).parent().siblings(".td-output").children(".input-average");
+        inputAve.val(result);
+        inputAve.attr("value", result);
+      }
+
+    </script>
+
     <script type="text/javascript">
               $(document).ready(function () {
               var navListItems = $('div.setup-panel div a'),

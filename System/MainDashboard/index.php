@@ -8,6 +8,41 @@
 ?>
 
 
+  <?php
+              error_reporting(0);
+              $con = mysql_connect("localhost","root","");
+              if (!$con) {
+                die('Could not connect: ' . mysql_error());
+              }
+
+              mysql_select_db("capas_db", $con);
+
+              $result = mysql_query("select count(1) FROM answer");
+              $row = mysql_fetch_array($result);
+
+              $total = $row[0];
+              $number= $total;
+
+              mysql_close($con);
+          ?>
+ <?php
+              error_reporting(0);
+              $con = mysql_connect("localhost","root","");
+              if (!$con) {
+                die('Could not connect: ' . mysql_error());
+              }
+
+              mysql_select_db("capas_db", $con);
+
+              $result = mysql_query("select count(1) FROM student_evaluator");
+              $row = mysql_fetch_array($result);
+
+              $total = $row[0];
+              $number2= $total;
+
+              mysql_close($con);
+          ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -199,7 +234,7 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>0<sup style="font-size: 20px"></sup></h3>
+              <h3><?php echo $number; ?><sup style="font-size: 20px"></sup></h3>
 
               <p>Evaluated Instructors</p>
             </div>
@@ -214,7 +249,7 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>0</h3>
+              <h3><?php echo $number2; ?></h3>
 
               <p>Number of Registered Evaluators</p>
             </div>
